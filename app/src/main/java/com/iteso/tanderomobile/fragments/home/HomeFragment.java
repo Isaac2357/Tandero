@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.iteso.tanderomobile.R;
 
 public class HomeFragment extends Fragment {
-
+    //Ian
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
