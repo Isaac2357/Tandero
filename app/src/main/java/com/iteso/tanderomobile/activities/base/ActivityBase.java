@@ -18,6 +18,7 @@ import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
 import com.iteso.tanderomobile.fragments.home.HomeFragment;
 
+//test
 public class ActivityBase extends AppCompatActivity {
     private BottomNavigationView navView;
     private BottomNavigationView.OnNavigationItemSelectedListener navBottomListener =
