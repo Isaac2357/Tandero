@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
@@ -19,7 +21,8 @@ import com.iteso.tanderomobile.activities.login.ActivityLogin;
 import com.iteso.tanderomobile.fragments.home.HomeFragment;
 
 public class ActivityBase extends AppCompatActivity {
-    private BottomNavigationView navView;
+    private BaseViewModel viewModel;
+
     private BottomNavigationView.OnNavigationItemSelectedListener navBottomListener =
             new BottomNavigationView.OnNavigationItemSelectedListener(){
                 @Override
@@ -29,21 +32,46 @@ public class ActivityBase extends AppCompatActivity {
                             Log.v("","");
                             openFragment(new HomeFragment(),null);
                             break;
-                        case R.id.navigation_close_session:
+                        case R.id.navigation_tanda1:
                                 Log.v("","");
-
                                 break;
+                        case R.id.navigation_tanda2:
+                            Log.v("","");
+                            break;
                     }
                     return true;
                 }
             };
-    private BaseViewModel viewModel;
+
+    private Toolbar.OnMenuItemClickListener menuItemClickListener =
+            new Toolbar.OnMenuItemClickListener(){
+
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.nav_profile:
+                            Log.v(".", "profile");
+                            break;
+                        case R.id.nav_close_session:
+                            Log.v(".", "close session");
+                            break;
+
+                    }
+
+                    return true;
+                }
+            };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        BottomNavigationView navView;
+        Toolbar toolbar;
         setContentView(R.layout.activity_base);
         navView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.nav_top);
+
         navView.setOnNavigationItemSelectedListener(navBottomListener);
+        toolbar.setOnMenuItemClickListener(menuItemClickListener);
         openFragment(new HomeFragment(), null);
         initViewModel();
     }
