@@ -108,4 +108,8 @@ public class BaseViewModel extends ViewModel {
         });
     }
 
+    public void closeSession() {
+        auth.signOut();
+    }
+
 }

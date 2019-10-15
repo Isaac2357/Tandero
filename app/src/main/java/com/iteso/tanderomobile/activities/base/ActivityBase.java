@@ -2,8 +2,10 @@ package com.iteso.tanderomobile.activities.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,9 +21,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
 import com.iteso.tanderomobile.fragments.home.HomeFragment;
+import com.iteso.tanderomobile.utils.CustomProgressDialog;
 
 public class ActivityBase extends AppCompatActivity {
     private BaseViewModel viewModel;
+    private CustomProgressDialog progressDialog;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navBottomListener =
             new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -53,7 +57,15 @@ public class ActivityBase extends AppCompatActivity {
                             Log.v(".", "profile");
                             break;
                         case R.id.nav_close_session:
-                            Log.v(".", "close session");
+                            viewModel.closeSession();
+                            progressDialog.show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressDialog.dismiss();
+                                    finish();
+                                }
+                            }, 2000);
                             break;
 
                     }
@@ -69,6 +81,7 @@ public class ActivityBase extends AppCompatActivity {
         setContentView(R.layout.activity_base);
         navView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.nav_top);
+        progressDialog = new CustomProgressDialog(this);
 
         navView.setOnNavigationItemSelectedListener(navBottomListener);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
