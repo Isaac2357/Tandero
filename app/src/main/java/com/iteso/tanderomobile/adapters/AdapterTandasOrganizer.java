@@ -29,7 +29,7 @@ public class AdapterTandasOrganizer extends RecyclerView.Adapter<AdapterTandasOr
 
     public AdapterTandasOrganizer.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                                   int viewType) {
-        Button v = (Button) LayoutInflater.from(parent.getContext())
+        View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_tanda, parent, false);
 
 
