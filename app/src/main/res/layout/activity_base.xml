@@ -12,7 +12,7 @@
         android:layout_height="?actionBarSize"
         android:layout_alignParentTop="true"
         app:title="Tandero"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         app:menu="@menu/top_nav_menu"/>
 
 

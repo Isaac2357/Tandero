@@ -42,5 +42,4 @@ public class DatabaseManager {
 
         return "NO INSTANCE AVAILABLE";
     }
-
 }
