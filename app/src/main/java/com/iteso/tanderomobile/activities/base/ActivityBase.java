@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
+import com.iteso.tanderomobile.cuenta.Cuenta;
 import com.iteso.tanderomobile.fragments.home.HomeFragment;
 import com.iteso.tanderomobile.utils.CustomProgressDialog;
 import com.iteso.tanderomobile.fragments.organizer.OrganizerFragment;
@@ -56,6 +57,8 @@ public class ActivityBase extends AppCompatActivity {
                 public boolean onMenuItemClick(MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.nav_profile:
+                            Intent abrir  = new Intent(getApplication(), Cuenta.class);
+                            startActivity(abrir);
                             Log.v(".", "profile");
                             break;
                         case R.id.nav_close_session:
