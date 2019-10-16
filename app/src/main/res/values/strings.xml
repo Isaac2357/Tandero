@@ -22,4 +22,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="close_session">Close Session</string>
     <string name="title_activity_a">a</string>
+    <string name="select_image">Selecciona imagen</string>
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellidos</string>
+    <string name="mail">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
 </resources>
