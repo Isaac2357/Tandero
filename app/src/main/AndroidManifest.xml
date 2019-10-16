@@ -9,22 +9,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity
-            android:name=".fragments.organizer.OrganizerFragment"
-            android:screenOrientation="portrait">
-        </activity>
-      
+
         <activity android:name=".cuenta.Enviar_email"> </activity>
-        
-        <activity
-            android:name=".a"
-            android:label="@string/title_activity_a"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".cuenta.Cuenta">
-        </activity>
-      
-        <activity android:name=".fragments.organizer.OrganizerFragment" />
-       
+
+        <activity android:name=".cuenta.Cuenta"></activity>
+
        <activity
             android:name=".activities.base.ActivityBase"
             android:screenOrientation="portrait"
