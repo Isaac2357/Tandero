@@ -12,7 +12,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerViewModel extends ViewModel {
 
@@ -25,6 +27,7 @@ public class OrganizerViewModel extends ViewModel {
     }
 
     public void requestTandas(){
+
         dbmanager.getCollectionRef("tandas").get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override

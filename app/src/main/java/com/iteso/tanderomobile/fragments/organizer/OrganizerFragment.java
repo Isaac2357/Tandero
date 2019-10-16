@@ -3,7 +3,6 @@ package com.iteso.tanderomobile.fragments.organizer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizer;
-import com.iteso.tanderomobile.fragments.home.HomeViewModel;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +25,7 @@ public class OrganizerFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private OrganizerViewModel organizerViewModel;
+    private FloatingActionButton floatingButton;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,6 +46,15 @@ public class OrganizerFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.fragment_organizer_tandas_rv);
         recyclerView.setHasFixedSize(true);
+
+        floatingButton = root.findViewById(R.id.fragment_organizer_floatingbutton);
+        floatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateTandaDialogFragment dialog = new CreateTandaDialogFragment();
+                dialog.show(getFragmentManager(), "Create tanda");
+            }
+        });
 
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
