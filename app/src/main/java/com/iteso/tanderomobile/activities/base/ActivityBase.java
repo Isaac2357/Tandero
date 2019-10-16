@@ -22,6 +22,7 @@ import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
 import com.iteso.tanderomobile.fragments.home.HomeFragment;
 import com.iteso.tanderomobile.utils.CustomProgressDialog;
+import com.iteso.tanderomobile.fragments.organizer.OrganizerFragment;
 
 public class ActivityBase extends AppCompatActivity {
     private BaseViewModel viewModel;
@@ -37,6 +38,7 @@ public class ActivityBase extends AppCompatActivity {
                             openFragment(new HomeFragment(),null);
                             break;
                         case R.id.navigation_tanda1:
+                            openFragment(new OrganizerFragment(),null);
                                 Log.v("","");
                                 break;
                         case R.id.navigation_tanda2:
