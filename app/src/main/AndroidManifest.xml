@@ -9,7 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragments.organizer.OrganizerFragment"></activity>
+        <activity android:name=".cuenta.Enviar_email">
+
+        </activity>
+        <activity
+            android:name=".a"
+            android:label="@string/title_activity_a"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".cuenta.Cuenta">
+
+        </activity>
+        <activity android:name=".fragments.organizer.OrganizerFragment" />
         <activity
             android:name=".activities.base.ActivityBase"
             android:label="@string/title_activity_base" />
@@ -17,7 +27,7 @@
         <activity
             android:name=".activities.login.ActivityLogin"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activities.ActivitySplash">
+        <activity android:name=".activities.ActivitySplash" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,5 +35,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
