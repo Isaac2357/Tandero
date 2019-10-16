@@ -1,7 +1,6 @@
-package com.iteso.tanderomobile.cuenta;
+package com.iteso.tanderomobile.activities.cuenta;
 
 import androidx.appcompat.app.AppCompatActivity;
-import io.opencensus.trace.MessageEvent;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 
 import com.iteso.tanderomobile.R;
 
-public class Enviar_email extends AppCompatActivity {
+public class ActivitySendEmail extends AppCompatActivity {
 
     EditText mRecipientET,mSubjetET,mMessageET;
     Button mSendEmailBtn;
