@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.cuenta;
+package com.iteso.tanderomobile.activities.cuenta;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

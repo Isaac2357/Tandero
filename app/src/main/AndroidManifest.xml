@@ -10,9 +10,9 @@
         android:theme="@style/AppTheme">
 
 
-        <activity android:name=".cuenta.Enviar_email"> </activity>
+        <activity android:name=".activities.cuenta.Enviar_email"> </activity>
 
-        <activity android:name=".cuenta.Cuenta"></activity>
+        <activity android:name=".activities.cuenta.Cuenta"></activity>
 
        <activity
             android:name=".activities.base.ActivityBase"
