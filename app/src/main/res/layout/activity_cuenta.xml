@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.cuenta.Cuenta">
+    tools:context=".activities.cuenta.ActivityProfile">
 
     <Button
         android:layout_width="match_parent"
@@ -17,9 +17,6 @@
         android:onClick="onclick"
         android:id="@+id/btnCargarImg"
         android:text="Selecciona imagen"/>
-
-
-
 
     <ImageView
         android:id="@+id/imagenId"

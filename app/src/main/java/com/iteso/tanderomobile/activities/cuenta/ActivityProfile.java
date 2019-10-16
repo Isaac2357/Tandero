@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.utils.Parameters;
 
-public class Cuenta extends AppCompatActivity {
+public class ActivityProfile extends AppCompatActivity {
 
     ImageView imagen;
     Button olvidarContra;
@@ -38,7 +38,7 @@ public class Cuenta extends AppCompatActivity {
         olvidarContra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent olvidarContra = new Intent(Cuenta.this, Enviar_email.class);
+                Intent olvidarContra = new Intent(ActivityProfile.this, ActivitySendEmail.class);
                 startActivity(olvidarContra);
             }
         });

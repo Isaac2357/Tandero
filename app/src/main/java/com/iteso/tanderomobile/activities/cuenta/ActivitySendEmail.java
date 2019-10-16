@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.iteso.tanderomobile.R;
 
-public class Enviar_email extends AppCompatActivity {
+public class ActivitySendEmail extends AppCompatActivity {
 
     EditText mRecipientET,mSubjetET,mMessageET;
     Button mSendEmailBtn;

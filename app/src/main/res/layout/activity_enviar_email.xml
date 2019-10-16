@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.cuenta.Enviar_email">
+    tools:context=".activities.cuenta.ActivitySendEmail">
 
     <EditText
         android:id="@+id/recipientET"
