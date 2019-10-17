@@ -3,6 +3,7 @@ package com.iteso.tanderomobile.fragments.organizer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizer;
+import com.iteso.tanderomobile.utils.CustomProgressDialog;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -26,13 +27,14 @@ public class OrganizerFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private OrganizerViewModel organizerViewModel;
     private FloatingActionButton floatingButton;
+    private CustomProgressDialog progressDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         organizerViewModel = ViewModelProviders.of(this).get(OrganizerViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_organizer, container, false);
-
+        progressDialog = new CustomProgressDialog(getActivity());
         organizerViewModel.getTandas().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> s) {
@@ -40,8 +42,10 @@ public class OrganizerFragment extends Fragment {
                 mAdapter = new AdapterTandasOrganizer(s);
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
         });
+        progressDialog.show();
         organizerViewModel.requestTandas();
 
         recyclerView = root.findViewById(R.id.fragment_organizer_tandas_rv);
