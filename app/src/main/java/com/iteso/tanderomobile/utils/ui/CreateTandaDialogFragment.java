@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class CreateTandaDialogFragment extends DialogFragment {
 
@@ -32,6 +33,7 @@ public class CreateTandaDialogFragment extends DialogFragment {
     private EditText mes;
     private EditText año;
     private DatabaseManager dbmanager;
+    private Random random;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class CreateTandaDialogFragment extends DialogFragment {
 
         dbmanager = DatabaseManager.createInstance();
 
+        random = new Random();
         nombreTanda = view.findViewById(R.id.dialog_createtanda_nombretanda);
         numParticipantes = view.findViewById(R.id.dialog_createtanda_participantes);
         frecuenciaPago = view.findViewById(R.id.dialog_createtanda_frecPago_rg);
@@ -71,8 +74,12 @@ public class CreateTandaDialogFragment extends DialogFragment {
                         docData.put("fechasPago", new ArrayList<>());
                         docData.put("frecuenciaPago", true);
                         docData.put("isClosed", false);
-                        docData.put("ligaInvitacion", "");
-                        docData.put("maxParticipantes", Integer.parseInt(numParticipantes.getText().toString()));
+                        docData.put("uniqueKey",
+                                nombreTanda.getText().toString().replaceAll("\\s+","")
+                                        +(char)(random.nextInt(26) + 'a')
+                                        +(char)(random.nextInt(26) + 'a')
+                                        +(char)(random.nextInt(26) + 'a'));
+                        docData.put("maxParticipantes", Integer.parseInt(numParticipantes.getText().toString().toLowerCase()));
                         docData.put("name", nombreTanda.getText().toString());
                         docData.put("organizador", Parameters.CURRENT_USER_EMAIL);
                         docData.put("pagosHechos", new ArrayList<>());
