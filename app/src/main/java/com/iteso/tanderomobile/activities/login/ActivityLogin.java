@@ -1,18 +1,11 @@
 package com.iteso.tanderomobile.activities.login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +16,7 @@ import android.widget.Toast;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.base.ActivityBase;
 import com.iteso.tanderomobile.activities.enrollment.ActivityEnroll;
-import com.iteso.tanderomobile.utils.CustomProgressDialog;
+import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
 public class ActivityLogin extends AppCompatActivity implements View.OnClickListener{

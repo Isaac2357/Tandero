@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer;
+package com.iteso.tanderomobile.fragments.organizer.admin;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrganizerViewModel extends ViewModel {
+public class AdminOrganizerViewModel extends ViewModel {
 
     private MutableLiveData<List<String>> misTandas = new MutableLiveData<>();
     private DatabaseManager dbmanager = DatabaseManager.createInstance();
