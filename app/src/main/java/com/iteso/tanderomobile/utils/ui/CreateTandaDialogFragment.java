@@ -91,7 +91,7 @@ public class CreateTandaDialogFragment extends DialogFragment {
 
                         dbmanager.getCollectionRef("user-tanda").document(
                                 nombreTanda.getText().toString()
-                                        .toLowerCase().replaceAll("\\s+", "")).set(docData);
+                                        .toLowerCase().replaceAll("\\s+", "")).set(data);
 
                         //notify changes on recyclerview
 
