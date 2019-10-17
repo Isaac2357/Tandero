@@ -61,6 +61,7 @@ public class CreateTandaDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         // Update database
                         Map<String, Object> docData = new HashMap<>();
+                        Map<String, Object> data = new HashMap<>();
                         docData.put("cantidadAportacion", Integer.parseInt(monto.getText().toString()));
                         docData.put("diaInicio", new Timestamp(
                                 new Date(
@@ -84,9 +85,14 @@ public class CreateTandaDialogFragment extends DialogFragment {
                         docData.put("organizador", Parameters.CURRENT_USER_EMAIL);
                         docData.put("pagosHechos", new ArrayList<>());
 
-                        dbmanager.getCollectionRef("tandas").document(
-                                nombreTanda.getText().toString() + Parameters.CURRENT_USER_EMAIL)
-                                .set(docData);
+                        dbmanager.getCollectionRef("tandas").document().set(docData);
+
+                        data.put("name", nombreTanda.getText().toString());
+
+                        dbmanager.getCollectionRef("user-tanda").document(
+                                nombreTanda.getText().toString()
+                                        .toLowerCase().replaceAll("\\s+", "")).set(docData);
+
                         //notify changes on recyclerview
 
                     }
