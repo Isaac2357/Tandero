@@ -28,4 +28,5 @@
     <string name="mail">Email</string>
     <string name="password">Password</string>
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="tanda_unique_key">Tanda unique key</string>
 </resources>

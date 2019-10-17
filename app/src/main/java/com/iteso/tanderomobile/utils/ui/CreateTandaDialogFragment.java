@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer;
+package com.iteso.tanderomobile.utils.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -34,6 +34,7 @@ public class CreateTandaDialogFragment extends DialogFragment {
     private EditText año;
     private DatabaseManager dbmanager;
     private Random random;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction

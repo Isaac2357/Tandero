@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,9 +22,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.cuenta.ActivityProfile;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
-import com.iteso.tanderomobile.fragments.home.HomeFragment;
-import com.iteso.tanderomobile.utils.CustomProgressDialog;
-import com.iteso.tanderomobile.fragments.organizer.OrganizerFragment;
+import com.iteso.tanderomobile.fragments.organizer.user.UserOrganizerFragment;
+import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
+import com.iteso.tanderomobile.fragments.organizer.admin.AdminOrganizerFragment;
 
 public class ActivityBase extends AppCompatActivity {
     private BaseViewModel viewModel;
@@ -37,11 +36,10 @@ public class ActivityBase extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.navigation_tanda1:
-                            openFragment(new OrganizerFragment(),null);
-                                Log.v("","");
+                            openFragment(new AdminOrganizerFragment(),null);
                                 break;
                         case R.id.navigation_tanda2:
-                            Log.v("","");
+                            openFragment(new UserOrganizerFragment(), null);
                             break;
                     }
                     return true;
@@ -57,7 +55,6 @@ public class ActivityBase extends AppCompatActivity {
                         case R.id.nav_profile:
                             Intent abrir  = new Intent(getApplication(), ActivityProfile.class);
                             startActivity(abrir);
-                            Log.v(".", "profile");
                             break;
                         case R.id.nav_close_session:
                             displaySignOutDialog();
@@ -80,7 +77,7 @@ public class ActivityBase extends AppCompatActivity {
 
         navView.setOnNavigationItemSelectedListener(navBottomListener);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
-        openFragment(new OrganizerFragment(), null);
+        openFragment(new AdminOrganizerFragment(), null);
         initViewModel();
     }
 
@@ -120,6 +117,8 @@ public class ActivityBase extends AppCompatActivity {
                 }
             }
         });
+
+        viewModel.getCurrentUserId();
     }
 
     public void displaySignOutDialog() {
@@ -136,7 +135,11 @@ public class ActivityBase extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         progressDialog.dismiss();
-                                        finish();
+                                        Intent loginIntent = new Intent(getApplication(), ActivityLogin.class);
+                                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                                Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(loginIntent);
                                     }
                                 }, 2000);
                             }
