@@ -36,10 +36,6 @@ public class ActivityBase extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
-                        case R.id.navigation_home:
-                            Log.v("","");
-                            openFragment(new HomeFragment(),null);
-                            break;
                         case R.id.navigation_tanda1:
                             openFragment(new OrganizerFragment(),null);
                                 Log.v("","");
@@ -84,7 +80,7 @@ public class ActivityBase extends AppCompatActivity {
 
         navView.setOnNavigationItemSelectedListener(navBottomListener);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
-        openFragment(new HomeFragment(), null);
+        openFragment(new OrganizerFragment(), null);
         initViewModel();
     }
 
