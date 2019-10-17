@@ -135,7 +135,11 @@ public class ActivityBase extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         progressDialog.dismiss();
-                                        finish();
+                                        Intent loginIntent = new Intent(getApplication(), ActivityLogin.class);
+                                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                                Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(loginIntent);
                                     }
                                 }, 2000);
                             }
