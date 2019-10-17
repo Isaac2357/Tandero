@@ -10,9 +10,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
+import com.iteso.tanderomobile.utils.Parameters;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizerViewModel extends ViewModel {
 
@@ -32,7 +35,8 @@ public class OrganizerViewModel extends ViewModel {
                         if(task.isSuccessful()){
                             ArrayList<String> tandas = new ArrayList<>();
                             for(QueryDocumentSnapshot document : task.getResult()){
-                                tandas.add((String)document.get("name"));
+                                if(document.get("organizador").toString().equals(Parameters.CURRENT_USER_EMAIL))
+                                    tandas.add((String)document.get("name"));
                             }
                             misTandas.postValue(tandas);
                         } else {
