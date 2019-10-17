@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,9 +39,18 @@ public class AdminOrganizerFragment extends Fragment {
         progressDialog = new CustomProgressDialog(getActivity());
         organizerViewModel.getTandas().observe(this, new Observer<List<String>>() {
             @Override
-            public void onChanged(@Nullable List<String> s) {
+            public void onChanged(@Nullable final List<String> s) {
                 Log.v("tandas", s.toString());
                 mAdapter = new AdapterTandasOrganizer(s);
+                ((AdapterTandasOrganizer) mAdapter).setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+                        Toast.makeText(getContext(),
+                                "selección: " + s.get(recyclerView.getChildAdapterPosition(view)).toString(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
@@ -48,7 +58,6 @@ public class AdminOrganizerFragment extends Fragment {
         });
         progressDialog.show();
         organizerViewModel.requestTandas();
-
         recyclerView = root.findViewById(R.id.fragment_organizer_tandas_rv);
         recyclerView.setHasFixedSize(true);
 
