@@ -45,8 +45,11 @@ public class EnrollViewModel extends ViewModel {
         return auth.getCurrentUser();
     }
 
-    public void writeUserInDatabase(String email) {
+    public void writeUserInDatabase(String email, String password) {
+
         Map<String, Object> user = new HashMap<>();
+        user.put("email", email);
+        user.put("password",password);
         user.put("isActivated",true);
         user.put("isPrivate",true);
         user.put("ratingOrganizador",5);
@@ -54,7 +57,7 @@ public class EnrollViewModel extends ViewModel {
         user.put("tandasOwned",0);
 
         dbManager.getCollectionRef("users")
-                    .document(email)
+                    .document()
                     .set(user);
     }
 
