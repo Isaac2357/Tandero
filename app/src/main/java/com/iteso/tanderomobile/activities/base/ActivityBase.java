@@ -1,5 +1,6 @@
 package com.iteso.tanderomobile.activities.base;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -58,15 +60,7 @@ public class ActivityBase extends AppCompatActivity {
                             Log.v(".", "profile");
                             break;
                         case R.id.nav_close_session:
-                            viewModel.closeSession();
-                            progressDialog.show();
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    progressDialog.dismiss();
-                                    finish();
-                                }
-                            }, 2000);
+                            displaySignOutDialog();
                             break;
 
                     }
@@ -126,6 +120,38 @@ public class ActivityBase extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void displaySignOutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cerrar sesión")
+                .setMessage("¿Desea cerrar sesión?")
+                .setPositiveButton("Aceptar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.closeSession();
+                                progressDialog.show();
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                        finish();
+                                    }
+                                }, 2000);
+                            }
+                 })
+                .setNegativeButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                })
+                .create().show();
+
+
+
     }
 
 }

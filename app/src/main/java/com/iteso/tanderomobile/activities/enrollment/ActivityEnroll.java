@@ -17,6 +17,8 @@ import com.iteso.tanderomobile.activities.base.ActivityBase;
 import com.iteso.tanderomobile.utils.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
+import java.text.ParseException;
+
 
 public class ActivityEnroll extends AppCompatActivity implements View.OnClickListener{
 
@@ -54,6 +56,7 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
                     progressDialog.dismiss();
                     Parameters.CURRENT_USER_EMAIL = email.getText().toString();
                     Parameters.CURRENT_USER_PASSWORD = password.getText().toString();
+                    viewModel.writeUserInDatabase(Parameters.CURRENT_USER_EMAIL);
                     Intent base = new Intent(getApplication(), ActivityBase.class);
                     base.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(base);
