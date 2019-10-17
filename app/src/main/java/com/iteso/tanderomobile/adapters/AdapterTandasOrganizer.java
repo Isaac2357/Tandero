@@ -12,8 +12,21 @@ import com.iteso.tanderomobile.R;
 
 import java.util.List;
 
-public class AdapterTandasOrganizer extends RecyclerView.Adapter<AdapterTandasOrganizer.MyViewHolder> {
+public class AdapterTandasOrganizer extends RecyclerView.Adapter<AdapterTandasOrganizer.MyViewHolder>
+    implements View.OnClickListener{
     private List<String> mDataset;
+    private View.OnClickListener listener;
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(listener != null){
+            listener.onClick(view);
+        }
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView tanda;
@@ -32,7 +45,7 @@ public class AdapterTandasOrganizer extends RecyclerView.Adapter<AdapterTandasOr
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_tanda, parent, false);
 
-
+        v.setOnClickListener(this);
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
