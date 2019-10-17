@@ -1,9 +1,10 @@
-package com.iteso.tanderomobile.fragments.organizer;
+package com.iteso.tanderomobile.fragments.organizer.admin;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizer;
-import com.iteso.tanderomobile.utils.CustomProgressDialog;
+import com.iteso.tanderomobile.utils.ui.CreateTandaDialogFragment;
+import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +22,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class OrganizerFragment extends Fragment {
+public class AdminOrganizerFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private OrganizerViewModel organizerViewModel;
+    private AdminOrganizerViewModel organizerViewModel;
     private FloatingActionButton floatingButton;
     private CustomProgressDialog progressDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        organizerViewModel = ViewModelProviders.of(this).get(OrganizerViewModel.class);
+        organizerViewModel = ViewModelProviders.of(this).get(AdminOrganizerViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_organizer, container, false);
         progressDialog = new CustomProgressDialog(getActivity());
