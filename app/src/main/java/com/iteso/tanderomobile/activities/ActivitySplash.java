@@ -1,7 +1,6 @@
 package com.iteso.tanderomobile.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,7 @@ import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
 
 public class ActivitySplash extends AppCompatActivity {
-    /** */
+    /** Progress bar view.*/
     private ProgressBar progressBar;
 
     /**
@@ -35,6 +34,9 @@ public class ActivitySplash extends AppCompatActivity {
 
     }
 
+    /**
+     * Method that opens the login activity.
+     */
     private void openLoginActivity() {
         Intent loginIntent = new Intent(this, ActivityLogin.class);
         loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK

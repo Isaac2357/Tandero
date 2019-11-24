@@ -23,11 +23,11 @@ import com.iteso.tanderomobile.fragments.organizer.user.UserOrganizerFragment;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 
 public class ActivityBase extends AppCompatActivity {
-    /** */
+    /** View model.*/
     private BaseViewModel viewModel;
-    /** */
+    /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
-    /** */
+    /** BottomNavView's listener.*/
     private BottomNavigationView.OnNavigationItemSelectedListener
             navBottomListener =
                         new BottomNavigationView
@@ -106,7 +106,7 @@ public class ActivityBase extends AppCompatActivity {
     /**
      * Initialize view model and observers for the base actiity.
      */
-    public void initViewModel() {
+    private void initViewModel() {
 
         viewModel = ViewModelProviders.of(this).get(BaseViewModel.class);
 
@@ -146,7 +146,7 @@ public class ActivityBase extends AppCompatActivity {
     /**
      * Displays the sign out dialog.
      */
-    public void displaySignOutDialog() {
+    private void displaySignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
             .setTitle("Cerrar sesión")

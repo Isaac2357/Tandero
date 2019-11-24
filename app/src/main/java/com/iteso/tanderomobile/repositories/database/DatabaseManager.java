@@ -6,11 +6,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 public final class DatabaseManager {
-    /** */
+    /** DatbaseManager instance.*/
     private static DatabaseManager instance = null;
-    /** */
+    /** Firebase instance.*/
     private final FirebaseFirestore firestoreInstance;
 
+    /**
+     * Private constructor for singleton.
+     */
     private DatabaseManager() {
         firestoreInstance = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()

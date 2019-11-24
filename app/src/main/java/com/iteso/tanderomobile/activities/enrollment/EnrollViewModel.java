@@ -14,13 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 class EnrollViewModel extends ViewModel {
-    /** */
+    /** Auth repository instance.*/
     private AuthenticationManager auth = AuthenticationManager.createInstance();
-    /** */
+    /** DB mamager instance.*/
     private DatabaseManager dbManager = DatabaseManager.createInstance();
-    /** */
+    /** Create account status live data. */
     private MutableLiveData<Boolean> createAccountStatus = new MutableLiveData<>();
-
     /**
      * Get account status.
      * @return Account status.
@@ -47,22 +46,19 @@ class EnrollViewModel extends ViewModel {
                     }
                 });
     }
-
     /**
-     *
+     * Current user's getter.
      * @return Current user.
      */
     FirebaseUser getCurrentUser() {
         return auth.getCurrentUser();
     }
-
     /**
      * Register user in the database.
      * @param email New user's email.
      * @param password New user's password.
      */
     void writeUserInDatabase(final String email, final String password) {
-
         Map<String, Object> user = new HashMap<>();
         user.put("email", email);
         user.put("password", password);
@@ -71,7 +67,6 @@ class EnrollViewModel extends ViewModel {
         user.put("ratingOrganizador", 5);
         user.put("ratingParticipante", 5);
         user.put("tandasOwned", 0);
-
         dbManager.getCollectionRef("users")
                     .document()
                     .set(user);

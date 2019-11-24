@@ -16,17 +16,17 @@ import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
 public class ActivityEnroll extends AppCompatActivity implements View.OnClickListener {
-    /** */
+    /** Email edit text. */
     private EditText email;
-    /** */
+    /** Password edit text.*/
     private EditText password;
-    /** */
+    /** Confirm password edit text.*/
     private EditText confirmPassword;
-    /** */
+    /** Register button. */
     private Button registerBtn;
-    /** */
+    /** View model.*/
     private EnrollViewModel viewModel;
-    /** */
+    /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
     /**
      * OnCreate callback.
@@ -40,6 +40,9 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
         initViewModel();
     }
 
+    /**
+     * Method init all views.
+     */
     private void initViews() {
         email = findViewById(R.id.user_email_value);
         password = findViewById(R.id.user_password_value);
@@ -49,6 +52,9 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
         progressDialog = new CustomProgressDialog(this);
     }
 
+    /**
+     * Method init view model and observers.
+     */
     private void initViewModel() {
         viewModel = ViewModelProviders.of(this).get(EnrollViewModel.class);
         viewModel.getCreateAccountStatus().observe(this, new Observer<Boolean>() {

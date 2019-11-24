@@ -6,16 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 
 class LoginViewModel extends ViewModel {
-    /** */
+    /** Auth repository.*/
     private AuthenticationManager auth = AuthenticationManager.createInstance();
-    /** */
+    /** Login status live data.*/
     private MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
 
     /**
@@ -26,6 +25,11 @@ class LoginViewModel extends ViewModel {
         return loginStatus;
     }
 
+    /**
+     * Login method.
+     * @param email user email
+     * @param password user password.
+     */
     void login(final String email, final String password) {
         Log.v("viewmodel", "---");
         auth.signIn(email, password)

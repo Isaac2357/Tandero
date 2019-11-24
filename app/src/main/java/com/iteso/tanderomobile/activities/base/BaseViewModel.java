@@ -16,47 +16,45 @@ import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import com.iteso.tanderomobile.utils.Parameters;
 
 class BaseViewModel extends ViewModel {
-    /** */
+    /** Current user.*/
     private MutableLiveData<FirebaseUser> currentUser = new MutableLiveData<>();
-    /** */
+    /** Auth repository instance. */
     private AuthenticationManager auth = AuthenticationManager.createInstance();
-    /** */
+    /** Reauth status.*/
     private MutableLiveData<Boolean> reauthenticateStatus;
     {
         reauthenticateStatus = new MutableLiveData<>();
     }
-
-    /** */
+    /** Delete account status.*/
     private MutableLiveData<Boolean> deleteAccountStatus;
 
     {
         deleteAccountStatus = new MutableLiveData<>();
     }
-
-    /** */
+    /** Update password status.*/
     private MutableLiveData<Boolean> updatePassword = new MutableLiveData<>();
-    /** */
+    /** DB manager instance.*/
     private DatabaseManager dbManager = DatabaseManager.createInstance();
 
     /**
-     * a.
-     * @return a
+     * Get current user.
+     * @return FirebaseUser current user.
      */
     public FirebaseUser getCurrentUser() {
         return auth.getCurrentUser();
     }
 
     /**
-     *
-     * @return a
+     * Account status' getter.
+     * @return Delete account live data.
      */
     LiveData<Boolean> getDeleteAccountStatus() {
         return deleteAccountStatus;
     }
 
     /**
-     *
-     * @return a
+     * ReAuth's getter.
+     * @return ReAuth live data.
      */
     LiveData<Boolean> getReAuthenticateStatus() {
         return reauthenticateStatus;
@@ -72,7 +70,7 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
+     * Delete user method.
      */
     private void deleteUser() {
         auth.deleteUser().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -90,7 +88,7 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
+     * Method to authenticate the current user.
      */
     void authenticateUser() {
         auth.reauthenticateUser()
@@ -109,7 +107,7 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
+     *  Delete account method.
      */
     public void deleteAccount() {
         auth.reauthenticateUser()
@@ -127,8 +125,8 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
-     * @param newPassword as
+     *  Method to change the password of the current user.
+     * @param newPassword new password.
      */
     private void updatePassword(final String newPassword) {
         auth.updateUserPassword(newPassword)
@@ -145,8 +143,8 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
-     * @param newPassword as
+     * Method to chage the password.
+     * @param newPassword new password.
      */
     public void updateUserPassword(final String newPassword) {
         auth.reauthenticateUser()
@@ -164,14 +162,14 @@ class BaseViewModel extends ViewModel {
     }
 
     /**
-     *
+     * Close session.
      */
     void closeSession() {
         auth.signOut();
     }
 
     /**
-     *
+     * Getter of current user ID.
      */
     void getCurrentUserId() {
         dbManager.getCollectionRef("users")

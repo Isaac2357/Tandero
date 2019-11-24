@@ -18,17 +18,17 @@ import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
 public class ActivityLogin extends AppCompatActivity implements View.OnClickListener {
-    /** */
+    /** User email edit text.*/
     private EditText userEmail;
-    /** */
+    /** User password edit text.*/
     private EditText userPassword;
-    /** */
+    /** Login button.*/
     private Button login;
-    /** */
+    /** Login view model.*/
     private LoginViewModel viewModel;
-    /** */
+    /** Register text view. */
     private TextView register;
-    /** */
+    /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
 
     /**
