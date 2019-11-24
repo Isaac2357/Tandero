@@ -40,7 +40,7 @@
         app:layout_constraintRight_toLeftOf="@id/frag_org_tanda_startnow_button"
         app:layout_constraintTop_toBottomOf="@id/frag_org_tanda_uniquekey_tv"/>
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/frag_org_tanda_startnow_button"
         android:text="Iniciar ahora!"
         android:layout_width="wrap_content"
@@ -50,6 +50,43 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/frag_org_tanda_guidelineVert_5"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        />
 
+    <TextView
+        android:id="@+id/frag_org_tanda_participantes_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Participantes:"
+        android:textSize="18dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/frag_org_tanda_guidelineVert_5"
+        app:layout_constraintTop_toBottomOf="@id/frag_org_tanda_fechainicio_tv"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frag_org_tanda_recyclerview_participantes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/frag_org_tanda_participantes_tv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/frag_org_tanda_guidelineVert_5"
+        />
+
+    <Button
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar usuarios "
+        app:layout_constraintTop_toBottomOf="@id/frag_org_tanda_recyclerview_participantes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
