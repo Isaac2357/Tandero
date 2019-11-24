@@ -5,41 +5,63 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
-public class DatabaseManager {
-
+public final class DatabaseManager {
+    /** */
     private static DatabaseManager instance = null;
-    private final FirebaseFirestore _firestoreInstance;
+    /** */
+    private final FirebaseFirestore firestoreInstance;
 
-    private DatabaseManager(){
-        _firestoreInstance = FirebaseFirestore.getInstance();
+    private DatabaseManager() {
+        firestoreInstance = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setTimestampsInSnapshotsEnabled(true)
                 .setPersistenceEnabled(true)
                 .setSslEnabled(true)
                 .build();
-        _firestoreInstance.setFirestoreSettings(settings);
+        firestoreInstance.setFirestoreSettings(settings);
     }
 
-    public static DatabaseManager createInstance(){
-        if(instance == null){
+    /**
+     * Creante instance.
+     * @return DatabaseManager instance.
+     */
+    public static DatabaseManager createInstance() {
+        if (instance == null) {
             instance = new DatabaseManager();
         }
         return instance;
     }
 
-    public CollectionReference getCollectionRef(String ref){
-        if(ref == null) return null;
-        return _firestoreInstance.collection(ref);
+    /**
+     * Get Collection.
+     * @param ref Collection name.
+     * @return Collenction reference.
+     */
+    public CollectionReference getCollectionRef(final String ref) {
+        if (ref == null) {
+            return null;
+        }
+        return firestoreInstance.collection(ref);
     }
 
-    public DocumentReference getDocument(String col, String ref){
-        return _firestoreInstance.collection(col).document(ref);
+    /**
+     * Get dcoument.
+     * @param col Collection name.
+     * @param ref Document name.
+     * @return Document reference.
+     */
+    public DocumentReference getDocument(final String col, final String ref) {
+        return firestoreInstance.collection(col).document(ref);
     }
 
-    public static String getHost(){
-        if(instance != null)
-            return instance._firestoreInstance.getFirestoreSettings().getHost();
-
+    /**
+     * Get host.
+     * @return Firestore instance host.
+     */
+    public static String getHost() {
+        if (instance != null) {
+            return instance.firestoreInstance.getFirestoreSettings().getHost();
+        }
         return "NO INSTANCE AVAILABLE";
     }
 }
