@@ -23,6 +23,8 @@ import com.iteso.tanderomobile.fragments.organizer.user.UserOrganizerFragment;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 
 public class ActivityBase extends AppCompatActivity {
+    /** Default wait time.*/
+    private static final int DEFAULT_WAIT_TIME = 2000;
     /** View model.*/
     private BaseViewModel viewModel;
     /** Progress dialog.*/
@@ -185,7 +187,6 @@ public class ActivityBase extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
-            }, 2000);
+            }, DEFAULT_WAIT_TIME);
     }
-
 }

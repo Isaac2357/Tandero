@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 class EnrollViewModel extends ViewModel {
+    /** Initial organizer rate.*/
+    private static final int INITAL_ORGANIZER_RATE = 5;
+    /** Initial participant rate.*/
+    private static final int INITIAL_PARTICIPANT_RATE = 5;
+
     /** Auth repository instance.*/
     private AuthenticationManager auth = AuthenticationManager.createInstance();
     /** DB mamager instance.*/
@@ -64,8 +69,8 @@ class EnrollViewModel extends ViewModel {
         user.put("password", password);
         user.put("isActivated", true);
         user.put("isPrivate", true);
-        user.put("ratingOrganizador", 5);
-        user.put("ratingParticipante", 5);
+        user.put("ratingOrganizador", INITAL_ORGANIZER_RATE);
+        user.put("ratingParticipante", INITIAL_PARTICIPANT_RATE);
         user.put("tandasOwned", 0);
         dbManager.getCollectionRef("users")
                     .document()

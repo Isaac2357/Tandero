@@ -12,7 +12,8 @@ import com.iteso.tanderomobile.activities.login.ActivityLogin;
 public class ActivitySplash extends AppCompatActivity {
     /** Progress bar view.*/
     private ProgressBar progressBar;
-
+    /**  Default progress bar time (millis).*/
+    private static final int DEFAULT_PROGRESS_BAR_TIME = 5000;
     /**
      * OnCreate callback.
      * @param savedInstanceState Instance.
@@ -30,7 +31,7 @@ public class ActivitySplash extends AppCompatActivity {
                 openLoginActivity();
 
             }
-        }, 5000);
+        }, DEFAULT_PROGRESS_BAR_TIME);
 
     }
 
