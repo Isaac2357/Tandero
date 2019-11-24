@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
-
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,55 +14,68 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.cuenta.ActivityProfile;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
+import com.iteso.tanderomobile.fragments.organizer.admin.AdminOrganizerFragment;
 import com.iteso.tanderomobile.fragments.organizer.user.UserOrganizerFragment;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
-import com.iteso.tanderomobile.fragments.organizer.admin.AdminOrganizerFragment;
 
 public class ActivityBase extends AppCompatActivity {
+    /** */
     private BaseViewModel viewModel;
+    /** */
     private CustomProgressDialog progressDialog;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener navBottomListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener(){
+    /** */
+    private BottomNavigationView.OnNavigationItemSelectedListener
+            navBottomListener =
+                        new BottomNavigationView
+                            .OnNavigationItemSelectedListener() {
                 @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                public boolean onNavigationItemSelected(@NonNull final MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.navigation_tanda1:
-                            openFragment(new AdminOrganizerFragment(),null);
-                                break;
+                            openFragment(new AdminOrganizerFragment(), null);
+                            break;
                         case R.id.navigation_tanda2:
                             openFragment(new UserOrganizerFragment(), null);
                             break;
+                        default:
+                                return true;
                     }
                     return true;
                 }
             };
-
+    /**
+     * Toolbar's OnItemClickListener.
+     */
     private Toolbar.OnMenuItemClickListener menuItemClickListener =
-            new Toolbar.OnMenuItemClickListener(){
-
+            new Toolbar.OnMenuItemClickListener() {
                 @Override
-                public boolean onMenuItemClick(MenuItem item) {
+                public boolean onMenuItemClick(final MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.nav_profile:
-                            Intent abrir  = new Intent(getApplication(), ActivityProfile.class);
+                            Intent abrir  = new Intent(getApplication(),
+                                                        ActivityProfile.class);
                             startActivity(abrir);
                             break;
                         case R.id.nav_close_session:
                             displaySignOutDialog();
                             break;
-
+                        default:
+                            return true;
                     }
-
                     return true;
                 }
             };
+
+    /**
+     * OnCreate callback for the app lifecycle.
+     * @param savedInstanceState Saved instance.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BottomNavigationView navView;
         Toolbar toolbar;
@@ -81,19 +90,30 @@ public class ActivityBase extends AppCompatActivity {
         initViewModel();
     }
 
-    public void openFragment(Fragment fragment, Bundle bundle) {
+    /**
+     *  Open new fragment in the base activity.
+     * @param fragment fragment to be opened
+     * @param bundle data to be transferred to the fragment.
+     */
+    public void openFragment(final Fragment fragment, final Bundle bundle) {
         fragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                                                    .beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
 
+    /**
+     * Initialize view model and observers for the base actiity.
+     */
     public void initViewModel() {
+
         viewModel = ViewModelProviders.of(this).get(BaseViewModel.class);
 
-        viewModel.getReauthenticateStatus().observe(this, new Observer<Boolean>() {
+        viewModel.getReAuthenticateStatus()
+                    .observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean status) {
+            public void onChanged(final Boolean status) {
                 if (status) {
                     Log.v("reauth", "fine");
                 } else {
@@ -102,15 +122,17 @@ public class ActivityBase extends AppCompatActivity {
             }
         });
 
-        viewModel.getDeleteAccountStatus().observe(this, new Observer<Boolean>() {
+        viewModel.getDeleteAccountStatus()
+            .observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean status) {
+            public void onChanged(final Boolean status) {
                 if (status) {
                     Log.v("delete", "fine");
-                    Intent login = new Intent(getApplication(), ActivityLogin.class);
-                    login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK |
-                            Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Intent login = new Intent(getApplication(),
+                                              ActivityLogin.class);
+                    login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            | Intent.FLAG_ACTIVITY_NEW_TASK
+                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(login);
                 } else {
                     Log.v("delete", "bad");
@@ -121,40 +143,49 @@ public class ActivityBase extends AppCompatActivity {
         viewModel.getCurrentUserId();
     }
 
+    /**
+     * Displays the sign out dialog.
+     */
     public void displaySignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Cerrar sesión")
-                .setMessage("¿Desea cerrar sesión?")
-                .setPositiveButton("Aceptar",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                viewModel.closeSession();
-                                progressDialog.show();
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        progressDialog.dismiss();
-                                        Intent loginIntent = new Intent(getApplication(), ActivityLogin.class);
-                                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                                                Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(loginIntent);
-                                    }
-                                }, 2000);
-                            }
+        builder
+            .setTitle("Cerrar sesión")
+            .setMessage("¿Desea cerrar sesión?")
+            .setPositiveButton("Aceptar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog,
+                                        final int which) {
+                        viewModel.closeSession();
+                        progressDialog.show();
+                        goToLoginActivity();
+                    }
                  })
                 .setNegativeButton("Cancelar",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                })
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog,
+                                            final int which) {
+                            dialog.dismiss();
+                        }
+                    })
                 .create().show();
+    }
 
-
-
+    private void goToLoginActivity() {
+        new Handler()
+            .postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    Intent loginIntent = new Intent(getApplication(),
+                        ActivityLogin.class);
+                    loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(loginIntent);
+                }
+            }, 2000);
     }
 
 }

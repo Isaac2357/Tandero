@@ -3,7 +3,6 @@ package com.iteso.tanderomobile.activities.enrollment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,24 +10,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.base.ActivityBase;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
-
-public class ActivityEnroll extends AppCompatActivity implements View.OnClickListener{
-
+public class ActivityEnroll extends AppCompatActivity implements View.OnClickListener {
+    /** */
     private EditText email;
+    /** */
     private EditText password;
+    /** */
     private EditText confirmPassword;
+    /** */
     private Button registerBtn;
+    /** */
     private EnrollViewModel viewModel;
+    /** */
     private CustomProgressDialog progressDialog;
-
+    /**
+     * OnCreate callback.
+     * @param savedInstanceState Instance.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enroll);
         initViews();
@@ -48,29 +53,35 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
         viewModel = ViewModelProviders.of(this).get(EnrollViewModel.class);
         viewModel.getCreateAccountStatus().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean status) {
+            public void onChanged(final Boolean status) {
                 if (status) {
                     Log.v("Create acc", "succes");
                     progressDialog.dismiss();
                     Parameters.CURRENT_USER_EMAIL = email.getText().toString();
                     Parameters.CURRENT_USER_PASSWORD = password.getText().toString();
-                    viewModel.writeUserInDatabase(Parameters.CURRENT_USER_EMAIL, Parameters.CURRENT_USER_PASSWORD);
+                    viewModel.writeUserInDatabase(Parameters.CURRENT_USER_EMAIL,
+                                                  Parameters.CURRENT_USER_PASSWORD);
                     Intent base = new Intent(getApplication(), ActivityBase.class);
-                    base.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    base.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    | Intent.FLAG_ACTIVITY_NEW_TASK
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(base);
                 } else {
                     progressDialog.dismiss();
                     Log.v("Create acc", "failed");
-                    Toast.makeText(getApplication(),"Registration failed... try again",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplication(), "Registration failed... try again", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
+    /**
+     * OnClick method.
+     * @param v View clicked.
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (v.getId() == R.id.register_btn) {
-
             String mail =  email.getText().toString();
             String pass = password.getText().toString();
             String confirmPass = confirmPassword.getText().toString();

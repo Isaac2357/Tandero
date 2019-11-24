@@ -12,25 +12,31 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 
-public class LoginViewModel extends ViewModel {
+class LoginViewModel extends ViewModel {
+    /** */
     private AuthenticationManager auth = AuthenticationManager.createInstance();
+    /** */
     private MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
 
-    public LiveData<Boolean> getLoginStatus() {
+    /**
+     * Get login status live data.
+     * @return Login status.
+     */
+    LiveData<Boolean> getLoginStatus() {
         return loginStatus;
     }
 
-    public void login(String email, String password) {
-        Log.v("viewmodel","---");
+    void login(final String email, final String password) {
+        Log.v("viewmodel", "---");
         auth.signIn(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+                    public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.v("-","Success");
+                            Log.v("-", "Success");
                             loginStatus.postValue(true);
                         } else {
-                            Log.v("-","Failed");
+                            Log.v("-", "Failed");
                             loginStatus.setValue(false);
                         }
                     }
