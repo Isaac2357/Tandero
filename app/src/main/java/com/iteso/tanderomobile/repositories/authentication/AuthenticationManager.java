@@ -8,35 +8,50 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.iteso.tanderomobile.utils.Parameters;
 
-public class AuthenticationManager implements Authentication{
+/**Authentication manager, implements the Authentication interface.*/
+public final class AuthenticationManager implements Authentication {
+    /**The authentication manager instance to serve as a singleton.*/
     private static  AuthenticationManager authenticationManager;
-    private FirebaseAuth _firebaseAuth;
+    /**Firebase Auth variable.*/
+    private FirebaseAuth mFirebaseAuth;
+    /**Constructor for the authenticationManager class.*/
     private AuthenticationManager() {
-        _firebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
+    /**AuthenticationManager singleton instance creation.
+     * @return the new or existing instance of the singleton.*/
     public static AuthenticationManager createInstance() {
         if (authenticationManager == null) {
             authenticationManager = new AuthenticationManager();
         }
         return authenticationManager;
     }
-
+    /**Create account method.
+     * @param email Email.
+     * @param password password.
+     * @return Task with AuthResult.*/
     @Override
-    public Task<AuthResult> createAccount(String email, String password ) {
-        return _firebaseAuth.createUserWithEmailAndPassword(email, password);
+    public Task<AuthResult> createAccount(
+            final String email,
+            final String password) {
+        return mFirebaseAuth.createUserWithEmailAndPassword(email, password);
     }
-
+    /**Sign in method.
+     * @param email Email.
+     * @param password password.
+     * @return Task with AuthResult.*/
     @Override
-    public Task<AuthResult> signIn(String email, String password) {
-        return _firebaseAuth.signInWithEmailAndPassword(email, password);
+    public Task<AuthResult> signIn(final String email, final String password) {
+        return mFirebaseAuth.signInWithEmailAndPassword(email, password);
     }
-
+    /**Sign out method.*/
     @Override
     public void signOut() {
-        _firebaseAuth.signOut();
+        mFirebaseAuth.signOut();
     }
-
+    /**Reauthenticate method.
+     * @return Task.*/
     @Override
     public Task<Void> reauthenticateUser() {
         AuthCredential credential = EmailAuthProvider.getCredential(
@@ -49,7 +64,8 @@ public class AuthenticationManager implements Authentication{
         }
         return null;
     }
-
+    /**Delete user method.
+     * @return Task.*/
     @Override
     public Task<Void> deleteUser() {
         FirebaseUser user = getCurrentUser();
@@ -58,17 +74,20 @@ public class AuthenticationManager implements Authentication{
         }
         return null;
     }
-
+    /**update User with new password method.
+     * @param newPassword The new password.
+     * @return Task.*/
     @Override
-    public Task<Void> updateUserPassword(String newPassword) {
+    public Task<Void> updateUserPassword(final String newPassword) {
         FirebaseUser user = getCurrentUser();
         if (user != null) {
            return user.updatePassword(newPassword);
         }
         return null;
     }
-
+    /**Gets the current Firebase user.
+     * @return current Firebase user.*/
     public FirebaseUser getCurrentUser() {
-       return  _firebaseAuth.getCurrentUser();
+       return  mFirebaseAuth.getCurrentUser();
     }
 }
