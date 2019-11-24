@@ -11,11 +11,15 @@ import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
 
 public class ActivitySplash extends AppCompatActivity {
-
+    /** */
     private ProgressBar progressBar;
 
+    /**
+     * OnCreate callback.
+     * @param savedInstanceState Instance.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         progressBar = findViewById(R.id.progress_bar);
@@ -33,9 +37,9 @@ public class ActivitySplash extends AppCompatActivity {
 
     private void openLoginActivity() {
         Intent loginIntent = new Intent(this, ActivityLogin.class);
-        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                             Intent.FLAG_ACTIVITY_NEW_TASK |
-                             Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                             | Intent.FLAG_ACTIVITY_NEW_TASK
+                             | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(loginIntent);
     }
 }
