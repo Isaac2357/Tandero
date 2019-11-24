@@ -19,55 +19,81 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**Batch organizer ViewModel view.*/
 public class OrganizerTandaViewModel extends ViewModel {
-    private MutableLiveData<List<String>> participantes = new MutableLiveData<>();
+    /**Mutable list of the names of the participants.*/
+    private MutableLiveData<List<String>> participants =
+            new MutableLiveData<>();
+    /**Database manager.*/
     private DatabaseManager dbmanager = DatabaseManager.createInstance();
-    private Map<String, Object> mapa;
-    public LiveData<List<String>> getParticipantes() {
-        return participantes;
+    /**Map used to retrieve information with the dbmanager.*/
+    private Map<String, Object> retrievedInformation;
+    /**This method gets the participants.
+     * @return the participants.
+     * */
+    public LiveData<List<String>> getParticipants() {
+        return participants;
     }
 
-    //TODO
-    public void requestParticipantes(){
+    /**
+     * Requests the participants in Firebase.
+     */
+    public void requestParticipantes() {
         dbmanager.getCollectionRef("user-tanda").get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            Log.v("otvm", Parameters.CURRENT_TANDA + "-" + Parameters.CURRENT_USER_ID);
-                            final ArrayList<String> participantesAux = new ArrayList<>();
-                            mapa = new HashMap<>();
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                if(Parameters.CURRENT_TANDA.equals(document.getString("name"))  ){
+                    public void onComplete(@NonNull
+                                           final Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.v("otvm", Parameters.CURRENT_TANDA
+                                    + "-" + Parameters.CURRENT_USER_ID);
+                            final ArrayList<String> participantesAux =
+                                    new ArrayList<>();
+                            retrievedInformation = new HashMap<>();
+                            for (QueryDocumentSnapshot document
+                                    : task.getResult()) {
+                                if (Parameters.CURRENT_TANDA.equals(
+                                        document.getString("name"))) {
 
-                                    mapa = document.getData();
-                                    mapa.remove("name");
-                                    dbmanager.getCollectionRef("users").get().addOnCompleteListener(
-                                            new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task2) {
-                                                    if(task2.isSuccessful()){
-                                                        for(QueryDocumentSnapshot document2 : task2.getResult()){
-                                                            for(String keys : mapa.keySet()){
-                                                                if(document2.getId().equals(keys)){
-                                                                    participantesAux.add(document2.getString("email"));
-                                                                }
-                                                            }
-                                                        }
-                                                        participantes.postValue(participantesAux);
-                                                    }
-                                                    Log.v("Participantes", participantesAux.toString());
-                                                }
-                                            }
-                                    );
+                                    retrievedInformation = document.getData();
+                                    retrievedInformation.remove("name");
 
+                                    doRequest(participantesAux);
 
-                                    Log.v("Mapa: ", mapa.toString());
+                                    Log.v("Mapa: ",
+                                            retrievedInformation.toString());
                                 }
                             }
 
 
                         }
+                    }
+                }
+        );
+    }
+    /** Method responsible for the request in Firebase.
+     * @param participantesAux participants
+     * */
+    private void doRequest(final ArrayList<String> participantesAux) {
+        dbmanager.getCollectionRef("users").get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull
+                                           final Task<QuerySnapshot> task2) {
+                        if (task2.isSuccessful()) {
+                            for (QueryDocumentSnapshot document2
+                                    : task2.getResult()) {
+                                for (String keys
+                                        : retrievedInformation.keySet()) {
+                                    if (document2.getId().equals(keys)) {
+                                        participantesAux.add(document2.
+                                                getString("email"));
+                                    }
+                                }
+                            }
+                            participants.postValue(participantesAux);
+                        }
+                        Log.v("Participants", participantesAux.toString());
                     }
                 }
         );

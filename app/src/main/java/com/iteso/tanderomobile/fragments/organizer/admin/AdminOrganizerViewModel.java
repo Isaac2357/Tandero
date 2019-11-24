@@ -13,34 +13,40 @@ import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import com.iteso.tanderomobile.utils.Parameters;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
+/**Admin Organizer ViewModel for the batches owned view.*/
 public class AdminOrganizerViewModel extends ViewModel {
-
+    /**Live data of lists of strings, containing the names of the batches.*/
     private MutableLiveData<List<String>> misTandas = new MutableLiveData<>();
+    /**Database manager.*/
     private DatabaseManager dbmanager = DatabaseManager.createInstance();
 
-
+    /**Getter for the variable that contains the batches names.
+     * @return misTandas variable.
+     * */
     public LiveData<List<String>> getTandas() {
         return misTandas;
     }
 
-    public void requestTandas(){
+    /**This method is called on the fragment,
+     * so that it requests the tandas on firebase.*/
+    public void requestTandas() {
         dbmanager.getCollectionRef("tandas").get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
+                    public void onComplete(
+                            @NonNull final Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
                             ArrayList<String> tandas = new ArrayList<>();
-                            for(QueryDocumentSnapshot document : task.getResult()){
-                                if(document.get("organizador").toString().equals(Parameters.CURRENT_USER_EMAIL))
-                                    tandas.add((String)document.get("name"));
+                            for (QueryDocumentSnapshot document
+                                    : task.getResult()) {
+                                if (document.get("organizador").
+                                        toString().
+                                        equals(Parameters.CURRENT_USER_EMAIL)) {
+                                    tandas.add((String) document.get("name"));
+                                }
                             }
                             misTandas.postValue(tandas);
-                        } else {
-
                         }
                     }
                 }
