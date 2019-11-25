@@ -10,6 +10,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
+import com.iteso.tanderomobile.utils.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,14 +67,14 @@ public class EnrollViewModel extends ViewModel {
      */
     void writeUserInDatabase(final String email, final String password) {
         Map<String, Object> user = new HashMap<>();
-        user.put("email", email);
-        user.put("password", password);
-        user.put("isActivated", true);
-        user.put("isPrivate", true);
-        user.put("ratingOrganizador", INITAL_ORGANIZER_RATE);
-        user.put("ratingParticipante", INITIAL_PARTICIPANT_RATE);
-        user.put("tandasOwned", 0);
-        dbManager.getCollectionRef("users")
+        user.put(Constants.FB_USER_EMAIL, email);
+        user.put(Constants.FB_USER_PASSWORD, password);
+        user.put(Constants.FB_USER_IS_ACTIVATED, true);
+        user.put(Constants.FB_USER_IS_PRIVATE, true);
+        user.put(Constants.FB_USER_RATING_ORG, INITAL_ORGANIZER_RATE);
+        user.put(Constants.FB_USER_RATING_PAR, INITIAL_PARTICIPANT_RATE);
+        user.put(Constants.FB_USER_TANDAS_OWNED, 0);
+        dbManager.getCollectionRef(Constants.FB_COLLECTION_USERS)
                     .document()
                     .set(user);
     }
