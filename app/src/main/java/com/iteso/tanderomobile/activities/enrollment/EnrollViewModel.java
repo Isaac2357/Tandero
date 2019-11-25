@@ -10,17 +10,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
+import com.iteso.tanderomobile.utils.Constants;
+
 import java.util.HashMap;
 import java.util.Map;
 
-class EnrollViewModel extends ViewModel {
-    /** */
-    private AuthenticationManager auth = AuthenticationManager.createInstance();
-    /** */
-    private DatabaseManager dbManager = DatabaseManager.createInstance();
-    /** */
-    private MutableLiveData<Boolean> createAccountStatus = new MutableLiveData<>();
+public class EnrollViewModel extends ViewModel {
+    /** Initial organizer rate.*/
+    private static final int INITAL_ORGANIZER_RATE = 5;
+    /** Initial participant rate.*/
+    private static final int INITIAL_PARTICIPANT_RATE = 5;
 
+    /** Auth repository instance.*/
+    private AuthenticationManager auth = AuthenticationManager.createInstance();
+    /** DB mamager instance.*/
+    private DatabaseManager dbManager = DatabaseManager.createInstance();
+    /** Create account status live data. */
+    private MutableLiveData<Boolean> createAccountStatus = new MutableLiveData<>();
     /**
      * Get account status.
      * @return Account status.
@@ -47,32 +53,28 @@ class EnrollViewModel extends ViewModel {
                     }
                 });
     }
-
     /**
-     *
+     * Current user's getter.
      * @return Current user.
      */
     FirebaseUser getCurrentUser() {
         return auth.getCurrentUser();
     }
-
     /**
      * Register user in the database.
      * @param email New user's email.
      * @param password New user's password.
      */
     void writeUserInDatabase(final String email, final String password) {
-
         Map<String, Object> user = new HashMap<>();
-        user.put("email", email);
-        user.put("password", password);
-        user.put("isActivated", true);
-        user.put("isPrivate", true);
-        user.put("ratingOrganizador", 5);
-        user.put("ratingParticipante", 5);
-        user.put("tandasOwned", 0);
-
-        dbManager.getCollectionRef("users")
+        user.put(Constants.FB_USER_EMAIL, email);
+        user.put(Constants.FB_USER_PASSWORD, password);
+        user.put(Constants.FB_USER_IS_ACTIVATED, true);
+        user.put(Constants.FB_USER_IS_PRIVATE, true);
+        user.put(Constants.FB_USER_RATING_ORG, INITAL_ORGANIZER_RATE);
+        user.put(Constants.FB_USER_RATING_PAR, INITIAL_PARTICIPANT_RATE);
+        user.put(Constants.FB_USER_TANDAS_OWNED, 0);
+        dbManager.getCollectionRef(Constants.FB_COLLECTION_USERS)
                     .document()
                     .set(user);
     }

@@ -18,16 +18,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.cuenta.ActivityProfile;
 import com.iteso.tanderomobile.activities.login.ActivityLogin;
-import com.iteso.tanderomobile.fragments.organizer.admin.AdminOrganizerFragment;
-import com.iteso.tanderomobile.fragments.organizer.user.UserOrganizerFragment;
+import com.iteso.tanderomobile.fragments.admin.AdminOrganizerFragment;
+import com.iteso.tanderomobile.fragments.user.UserOrganizerFragment;
+import com.iteso.tanderomobile.utils.Constants;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 
 public class ActivityBase extends AppCompatActivity {
-    /** */
+    /** Default wait time.*/
+    private static final int DEFAULT_WAIT_TIME = 2000;
+    /** View model.*/
     private BaseViewModel viewModel;
-    /** */
+    /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
-    /** */
+    /** SharedPrefences util class.*/
+    private SharedPrefs sharedPrefs;
+    /** BottomNavView's listener.*/
     private BottomNavigationView.OnNavigationItemSelectedListener
             navBottomListener =
                         new BottomNavigationView
@@ -56,8 +62,7 @@ public class ActivityBase extends AppCompatActivity {
                 public boolean onMenuItemClick(final MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.nav_profile:
-                            Intent abrir  = new Intent(getApplication(),
-                                                        ActivityProfile.class);
+                            Intent abrir  = new Intent(getApplication(), ActivityProfile.class);
                             startActivity(abrir);
                             break;
                         case R.id.nav_close_session:
@@ -83,6 +88,7 @@ public class ActivityBase extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.nav_top);
         progressDialog = new CustomProgressDialog(this);
+        sharedPrefs = new SharedPrefs(this);
 
         navView.setOnNavigationItemSelectedListener(navBottomListener);
         toolbar.setOnMenuItemClickListener(menuItemClickListener);
@@ -97,8 +103,7 @@ public class ActivityBase extends AppCompatActivity {
      */
     public void openFragment(final Fragment fragment, final Bundle bundle) {
         fragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-                                                    .beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
@@ -106,7 +111,7 @@ public class ActivityBase extends AppCompatActivity {
     /**
      * Initialize view model and observers for the base actiity.
      */
-    public void initViewModel() {
+    private void initViewModel() {
 
         viewModel = ViewModelProviders.of(this).get(BaseViewModel.class);
 
@@ -128,30 +133,43 @@ public class ActivityBase extends AppCompatActivity {
             public void onChanged(final Boolean status) {
                 if (status) {
                     Log.v("delete", "fine");
-                    Intent login = new Intent(getApplication(),
-                                              ActivityLogin.class);
+                    Intent login = new Intent(getApplication(), ActivityLogin.class);
                     login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            | Intent.FLAG_ACTIVITY_NEW_TASK
-                            | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    | Intent.FLAG_ACTIVITY_NEW_TASK
+                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(login);
                 } else {
                     Log.v("delete", "bad");
                 }
             }
         });
-
-        viewModel.getCurrentUserId();
+        viewModel.getIdValue()
+                 .observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(final String id) {
+                if (id.equals("")) {
+                    //TODO handle error.
+                    Log.v("--l", "handle error");
+                } else {
+                    sharedPrefs.saveToPrefs(Constants.CURRENT_USER_ID, id);
+                }
+            }
+        });
+        String userEmail = (String) sharedPrefs.getFromPrefs(Constants.CURRENT_USER_EMAIL, "");
+        if (!userEmail.equals("")) {
+            viewModel.getCurrentUserId(userEmail);
+        }
     }
 
     /**
      * Displays the sign out dialog.
      */
-    public void displaySignOutDialog() {
+    private void displaySignOutDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
-            .setTitle("Cerrar sesión")
-            .setMessage("¿Desea cerrar sesión?")
-            .setPositiveButton("Aceptar",
+            .setTitle(getString(R.string.dialog_sign_out_title))
+            .setMessage(getString(R.string.dialog_sign_out_message))
+            .setPositiveButton(getString(R.string.dialog_sign_out_postive),
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog,
@@ -161,7 +179,7 @@ public class ActivityBase extends AppCompatActivity {
                         goToLoginActivity();
                     }
                  })
-                .setNegativeButton("Cancelar",
+                .setNegativeButton(getString(R.string.dialog_sign_out_negative),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog,
@@ -185,7 +203,6 @@ public class ActivityBase extends AppCompatActivity {
                         | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
-            }, 2000);
+            }, DEFAULT_WAIT_TIME);
     }
-
 }
