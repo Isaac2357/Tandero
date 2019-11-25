@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer.user;
+package com.iteso.tanderomobile.fragments.user;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -13,7 +13,7 @@ import com.iteso.tanderomobile.utils.Parameters;
 import java.util.ArrayList;
 import java.util.List;
 /**User Organizer View Model for the User Organizer Fragment.*/
-class UserOrganizerViewModel extends ViewModel {
+public class UserOrganizerViewModel extends ViewModel {
     /**List of batches.*/
     private MutableLiveData<List<String>> misTandas = new MutableLiveData<>();
     /**The instance of the database.*/
@@ -23,8 +23,10 @@ class UserOrganizerViewModel extends ViewModel {
     LiveData<List<String>> getTandas() {
         return misTandas;
     }
-    /**Request tandas with instance of database.*/
-    public void requestTandas() {
+    /**Request tandas with instance of database.
+     * @param userID current user id.
+     **/
+    public void requestTandas(final String userID) {
         dbmanager.getCollectionRef("user-tanda")
                  .get().addOnCompleteListener(
                          new OnCompleteListener<QuerySnapshot>() {
@@ -34,7 +36,7 @@ class UserOrganizerViewModel extends ViewModel {
                     if (task.getResult() != null) {
                         ArrayList<String> myTandas = new ArrayList<>();
                         for (DocumentSnapshot doc : task.getResult()) {
-                            if (doc.get(Parameters.CURRENT_USER_ID) != null) {
+                            if (doc.get(userID) != null) {
                                 myTandas.add((String) doc.get("name"));
                             }
                         }

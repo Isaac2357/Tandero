@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer.user;
+package com.iteso.tanderomobile.fragments.user;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizer;
+import com.iteso.tanderomobile.utils.Constants;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.ui.JoinTandaDialog;
 import java.util.List;
@@ -26,6 +28,8 @@ public class UserOrganizerFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     /**Progress dialog that shows whenver the batches havent loaded in.*/
     private CustomProgressDialog progressDialog;
+    /** SharedPrefences. */
+    private SharedPrefs sharedPrefs;
     /**Creates the view for the fragment.
      * @param inflater the Layout inflater.
      * @param container The ViewGroup container.
@@ -42,6 +46,7 @@ public class UserOrganizerFragment extends Fragment {
         View root = inflater.inflate(
                 R.layout.fragment_organizer, container, false);
         progressDialog = new CustomProgressDialog(getActivity());
+        sharedPrefs = new SharedPrefs(getActivity());
 
         organizerViewModel.getTandas().observe(this,
                 new Observer<List<String>>() {
@@ -56,7 +61,13 @@ public class UserOrganizerFragment extends Fragment {
         });
 
         progressDialog.show();
-        organizerViewModel.requestTandas();
+        String userID = (String) sharedPrefs.getFromPrefs(Constants.CURRENT_USER_ID, "");
+        if (!userID.equals("")) {
+            organizerViewModel.requestTandas(userID);
+        } else  {
+            //TODO handle error
+            Log.v("--l", "Error request tanda");
+        }
 
         recyclerView = root.findViewById(R.id.fragment_organizer_tandas_rv);
         recyclerView.setHasFixedSize(true);
