@@ -1,5 +1,6 @@
 package com.iteso.tanderomobile.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -26,6 +27,7 @@ public class SharedPrefs {
      * @param key key of the value to be saved.
      * @param value value to be saved in SharedPreferences.
      */
+    @SuppressLint("ApplySharedPref")
     public void saveToPrefs(final String key, final Object value) {
         if (contextWeakReference.get() != null) {
             SharedPreferences prefs =
@@ -44,7 +46,7 @@ public class SharedPrefs {
             } else if (value instanceof Double) {
                 editor.putLong(key, Double.doubleToRawLongBits((double) value));
             }
-            editor.apply();
+            editor.commit(); // Save it synchrounously
         }
     }
 
