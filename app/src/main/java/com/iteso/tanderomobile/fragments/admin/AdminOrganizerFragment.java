@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer.admin;
+package com.iteso.tanderomobile.fragments.admin;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
