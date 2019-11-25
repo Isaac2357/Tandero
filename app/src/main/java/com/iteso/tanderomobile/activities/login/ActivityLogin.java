@@ -87,7 +87,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(final View v) {
         if (v.getId() == R.id.login_btn) {
-            progressDialog.show();
+
             if (userEmail.getText() != null && userPassword.getText() != null) {
                 String email = userEmail.getText().toString();
                 String password = userPassword.getText().toString();
@@ -99,6 +99,7 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                     userPassword.setError(getString(R.string.login_blank_password));
                     }
                 } else {
+                    progressDialog.show();
                     viewModel.login(email, password);
                 }
             }

@@ -15,7 +15,7 @@ import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import com.iteso.tanderomobile.utils.Parameters;
 
-class BaseViewModel extends ViewModel {
+public class BaseViewModel extends ViewModel {
     /** Current user.*/
     private MutableLiveData<FirebaseUser> currentUser = new MutableLiveData<>();
     /** Auth repository instance. */

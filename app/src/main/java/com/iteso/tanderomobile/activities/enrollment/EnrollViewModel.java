@@ -13,7 +13,7 @@ import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import java.util.HashMap;
 import java.util.Map;
 
-class EnrollViewModel extends ViewModel {
+public class EnrollViewModel extends ViewModel {
     /** Initial organizer rate.*/
     private static final int INITAL_ORGANIZER_RATE = 5;
     /** Initial participant rate.*/

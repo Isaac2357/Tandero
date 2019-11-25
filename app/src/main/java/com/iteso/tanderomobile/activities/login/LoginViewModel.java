@@ -10,7 +10,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 
-class LoginViewModel extends ViewModel {
+public class LoginViewModel extends ViewModel {
     /** Auth repository.*/
     private AuthenticationManager auth = AuthenticationManager.createInstance();
     /** Login status live data.*/
