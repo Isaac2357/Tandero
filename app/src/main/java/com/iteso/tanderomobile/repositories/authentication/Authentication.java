@@ -17,8 +17,10 @@ public interface Authentication {
     /**Sign out method.*/
     void signOut();
     /**Reauthenticate method.
+     * @param email user email
+     * @param password user password
      * @return Task.*/
-    Task<Void> reauthenticateUser();
+    Task<Void> reauthenticateUser(String email, String password);
     /**Delete user method.
      * @return Task.*/
     Task<Void> deleteUser();
