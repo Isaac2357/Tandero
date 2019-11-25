@@ -35,4 +35,8 @@
     <string name="enroll_password_text">Password:</string>
     <string name="enroll_confirm_password_text">Confirm password:</string>
     <string name="enroll_register_text">Register</string>
+    <string name="login_mail_text">Email:</string>
+    <string name="login_password_text">Password:</string>
+    <string name="login_btn_text">Login</string>
+    <string name="login_register_text">Register</string>
 </resources>
