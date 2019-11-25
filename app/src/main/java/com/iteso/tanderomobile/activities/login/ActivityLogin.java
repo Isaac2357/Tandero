@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +29,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     private TextView register;
     /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
-
     /**
      * OnCreate callback.
      * @param savedInstanceState Instance.
@@ -42,7 +40,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         initViews();
         initViewModel();
     }
-
     /**
      * Init views.
      */
@@ -55,7 +52,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
         register.setOnClickListener(this);
         progressDialog = new CustomProgressDialog(this);
     }
-
     /**
      * Init view model and observers.
      */
@@ -65,7 +61,6 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
             @Override
             public void onChanged(final Boolean status) {
                 if (status) {
-                    Log.v("login", "success");
                     progressDialog.dismiss();
                     // Save user credentials
                     Parameters.CURRENT_USER_EMAIL = userEmail.getText().toString();
@@ -77,17 +72,14 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                                     | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(base);
                 } else {
-                    //show error dialog
-                    Log.v("login", "failed");
                     progressDialog.dismiss();
                     Toast.makeText(getApplication(),
-                               "Login failed... try again",
+                                    getText(R.string.login_failed),
                                     Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
-
     /**
      * OnClick method.
      * @param v View clicked.
@@ -96,11 +88,21 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
     public void onClick(final View v) {
         if (v.getId() == R.id.login_btn) {
             progressDialog.show();
-            String email = userEmail.getText().toString();
-            String password = userPassword.getText().toString();
-            viewModel.login(email, password);
+            if (userEmail.getText() != null && userPassword.getText() != null) {
+                String email = userEmail.getText().toString();
+                String password = userPassword.getText().toString();
+                if (email.trim().length() == 0 || password.trim().length() == 0) {
+                    if (email.trim().length() == 0) {
+                    userEmail.setError(getString(R.string.login_blank_email));
+                    }
+                    if (password.trim().length() == 0) {
+                    userPassword.setError(getString(R.string.login_blank_password));
+                    }
+                } else {
+                    viewModel.login(email, password);
+                }
+            }
         } else if (v.getId() == R.id.register) {
-            Log.v("--", "open register");
             startActivity(new Intent(this, ActivityEnroll.class));
         }
     }

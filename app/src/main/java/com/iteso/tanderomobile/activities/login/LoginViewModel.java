@@ -1,7 +1,6 @@
 package com.iteso.tanderomobile.activities.login;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,7 +15,6 @@ class LoginViewModel extends ViewModel {
     private AuthenticationManager auth = AuthenticationManager.createInstance();
     /** Login status live data.*/
     private MutableLiveData<Boolean> loginStatus = new MutableLiveData<>();
-
     /**
      * Get login status live data.
      * @return Login status.
@@ -24,27 +22,22 @@ class LoginViewModel extends ViewModel {
     LiveData<Boolean> getLoginStatus() {
         return loginStatus;
     }
-
     /**
      * Login method.
      * @param email user email
      * @param password user password.
      */
     void login(final String email, final String password) {
-        Log.v("viewmodel", "---");
         auth.signIn(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull final Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Log.v("-", "Success");
                             loginStatus.postValue(true);
                         } else {
-                            Log.v("-", "Failed");
                             loginStatus.setValue(false);
                         }
                     }
                 });
     }
-
 }
