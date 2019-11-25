@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.base.ActivityBase;
+import com.iteso.tanderomobile.utils.Constants;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.Parameters;
 
@@ -28,6 +30,8 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
     private EnrollViewModel viewModel;
     /** Progress dialog.*/
     private CustomProgressDialog progressDialog;
+    /** SharedPerefeneces util instance. */
+    private SharedPrefs sharedPrefs;
     /**
      * OnCreate callback.
      * @param savedInstanceState Instance.
@@ -50,6 +54,7 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
         registerBtn = findViewById(R.id.register_btn);
         registerBtn.setOnClickListener(this);
         progressDialog = new CustomProgressDialog(this);
+        sharedPrefs = new SharedPrefs(this);
     }
 
     /**
@@ -63,10 +68,16 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
                 if (status) {
                     Log.v("Create acc", "succes");
                     progressDialog.dismiss();
-                    Parameters.CURRENT_USER_EMAIL = email.getText().toString();
-                    Parameters.CURRENT_USER_PASSWORD = password.getText().toString();
-                    viewModel.writeUserInDatabase(Parameters.CURRENT_USER_EMAIL,
-                                                  Parameters.CURRENT_USER_PASSWORD);
+                    // SharedPreferences
+                    sharedPrefs.saveToPrefs(Constants.CURRENT_USER_EMAIL,
+                                            email.getText().toString());
+                    sharedPrefs.saveToPrefs(Constants.CURRENT_USER_PASSWORD,
+                                            password.getText().toString());
+                    String usrEmail = (String) sharedPrefs.getFromPrefs(Constants.CURRENT_USER_EMAIL,
+                                                                "");
+                    String usrPassword = (String) sharedPrefs.getFromPrefs(Constants.CURRENT_USER_PASSWORD,
+                                                                    "");
+                    viewModel.writeUserInDatabase(usrEmail, usrPassword);
                     Intent base = new Intent(getApplication(), ActivityBase.class);
                     base.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     | Intent.FLAG_ACTIVITY_NEW_TASK
@@ -75,7 +86,7 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
                 } else {
                     progressDialog.dismiss();
                     Log.v("Create acc", "failed");
-                    Toast.makeText(getApplication(), "Registration failed... try again", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplication(), getText(R.string.enroll_registration_failed), Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -88,16 +99,32 @@ public class ActivityEnroll extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(final View v) {
         if (v.getId() == R.id.register_btn) {
-            String mail =  email.getText().toString();
-            String pass = password.getText().toString();
-            String confirmPass = confirmPassword.getText().toString();
-            if (pass.equals(confirmPass)) {
-                progressDialog.show();
-                viewModel.createAccount(mail, pass);
-            } else {
-                password.setError("Los valores no coinciden");
-                confirmPassword.setError("Los valores no coinciden");
+            if (email.getText() != null && password.getText() != null && confirmPassword.getText() != null) {
+                String mail =  email.getText().toString();
+                String pass = password.getText().toString();
+                String confirmPass = confirmPassword.getText().toString();
+                if (mail.trim().length() == 0
+                    || pass.trim().length() == 0
+                    || confirmPass.trim().length() == 0) {
+                    if (mail.trim().length() == 0) {
+                        email.setError(getString(R.string.app_blank_value));
+                    } else if (pass.trim().length() == 0) {
+                        password.setError(getString(R.string.app_blank_value));
+                    } else if (confirmPass.trim().length() == 0) {
+                        confirmPassword.setError(getString(R.string.app_blank_value));
+                    }
+                } else {
+                    if (pass.equals(confirmPass)) {
+                        progressDialog.show();
+                        viewModel.createAccount(mail, pass);
+                    } else {
+                        password.setError(getString(R.string.enroll_values_do_not_match));
+                        confirmPassword.setError(getString(R.string.enroll_values_do_not_match));
+                    }
+                }
+
             }
+
         }
     }
 }
