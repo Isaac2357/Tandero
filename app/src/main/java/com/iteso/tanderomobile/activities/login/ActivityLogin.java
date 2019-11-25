@@ -13,8 +13,9 @@ import android.widget.Toast;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.base.ActivityBase;
 import com.iteso.tanderomobile.activities.enrollment.ActivityEnroll;
+import com.iteso.tanderomobile.utils.Constants;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
-import com.iteso.tanderomobile.utils.Parameters;
 
 public class ActivityLogin extends AppCompatActivity implements View.OnClickListener {
     /** User email edit text.*/
@@ -63,8 +64,9 @@ public class ActivityLogin extends AppCompatActivity implements View.OnClickList
                 if (status) {
                     progressDialog.dismiss();
                     // Save user credentials
-                    Parameters.CURRENT_USER_EMAIL = userEmail.getText().toString();
-                    Parameters.CURRENT_USER_PASSWORD = userPassword.getText().toString();
+                    SharedPrefs sp = new SharedPrefs(getApplicationContext());
+                    sp.saveToPrefs(Constants.CURRENT_USER_EMAIL, userEmail.getText().toString());
+                    sp.saveToPrefs(Constants.CURRENT_USER_PASSWORD, userPassword.getText().toString());
                     //Go to main act
                     Intent base = new Intent(getApplication(), ActivityBase.class);
                     base.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
