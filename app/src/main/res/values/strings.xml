@@ -35,8 +35,13 @@
     <string name="enroll_password_text">Password:</string>
     <string name="enroll_confirm_password_text">Confirm password:</string>
     <string name="enroll_register_text">Register</string>
+
+    <!--  Activity login  -->
     <string name="login_mail_text">Email:</string>
     <string name="login_password_text">Password:</string>
     <string name="login_btn_text">Login</string>
     <string name="login_register_text">Register</string>
+    <string name="login_blank_email">Blank email is not allowed.</string>
+    <string name="login_blank_password">Blank password is not allowed.</string>
+    <string name="login_failed">Login failed… try again</string>
 </resources>
