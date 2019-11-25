@@ -1,19 +1,17 @@
 package com.iteso.tanderomobile.activities.base;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.iteso.tanderomobile.repositories.authentication.AuthenticationManager;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
-import com.iteso.tanderomobile.utils.Parameters;
+import com.iteso.tanderomobile.utils.Constants;
 
 public class BaseViewModel extends ViewModel {
     /** Current user.*/
@@ -31,6 +29,8 @@ public class BaseViewModel extends ViewModel {
     {
         deleteAccountStatus = new MutableLiveData<>();
     }
+    /** ID value.*/
+    private MutableLiveData<String> idValue =  new MutableLiveData<>();
     /** Update password status.*/
     private MutableLiveData<Boolean> updatePassword = new MutableLiveData<>();
     /** DB manager instance.*/
@@ -59,7 +59,6 @@ public class BaseViewModel extends ViewModel {
     LiveData<Boolean> getReAuthenticateStatus() {
         return reauthenticateStatus;
     }
-
     /**
      *  Method that returns the live data of the
      *  password status.
@@ -68,60 +67,76 @@ public class BaseViewModel extends ViewModel {
     public LiveData<Boolean> getUpdatePasswordStatus() {
         return updatePassword;
     }
-
+    /**
+     * @return ID value live data.
+     */
+    public LiveData<String> getIdValue() {
+        return idValue;
+    }
     /**
      * Delete user method.
      */
     private void deleteUser() {
-        auth.deleteUser().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull final Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Log.v("delete", "Success");
-                    deleteAccountStatus.postValue(true);
-                } else {
-                    Log.v("delete", "failed");
-                    deleteAccountStatus.postValue(false);
+        Task<Void> deleteTask = auth.deleteUser();
+        if (deleteTask != null) {
+            deleteTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull final Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.v("delete", "Success");
+                        deleteAccountStatus.postValue(true);
+                    } else {
+                        Log.v("delete", "failed");
+                        deleteAccountStatus.postValue(false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     /**
      * Method to authenticate the current user.
+     * @param email user email.
+     * @param password user password.
      */
-    void authenticateUser() {
-        auth.reauthenticateUser()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.v("reauth", "Success");
-                            reauthenticateStatus.postValue(true);
-                        } else {
-                            Log.v("reauth", "failed");
-                            reauthenticateStatus.postValue(false);
-                        }
-                    }
-                });
+    void authenticateUser(final String email, final String password) {
+        Task<Void> authTask = auth.reauthenticateUser(email, password);
+        if (authTask != null) {
+            authTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull final Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Log.v("reauth", "Success");
+                    reauthenticateStatus.postValue(true);
+                } else {
+                    Log.v("reauth", "failed");
+                    reauthenticateStatus.postValue(false);
+                }
+                }
+            });
+        }
     }
 
     /**
      *  Delete account method.
+     * @param email user email.
+     * @param password user password.
      */
-    public void deleteAccount() {
-        auth.reauthenticateUser()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.v("reauth", "Success");
-                            deleteUser();
-                        } else {
-                            Log.v("reauth", "failed");
-                        }
+    public void deleteAccount(final String email, final String password) {
+        Task<Void> reauthTask = auth.reauthenticateUser(email, password);
+        if (reauthTask != null) {
+            reauthTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull final Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.v("reauth", "Success");
+                        deleteUser();
+                    } else {
+                        Log.v("reauth", "failed");
                     }
-                });
+                }
+            });
+        }
     }
 
     /**
@@ -129,36 +144,42 @@ public class BaseViewModel extends ViewModel {
      * @param newPassword new password.
      */
     private void updatePassword(final String newPassword) {
-        auth.updateUserPassword(newPassword)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.v("uppass", "Success");
-                        } else {
-                            Log.v("uppass", "failed");
-                        }
+        Task<Void> updatePassTask = auth.updateUserPassword(newPassword);
+        if (updatePassTask != null) {
+            updatePassTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull final Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.v("uppass", "Success");
+                    } else {
+                        Log.v("uppass", "failed");
                     }
-                });
+                }
+            });
+        }
     }
 
     /**
      * Method to chage the password.
      * @param newPassword new password.
+     * @param email user email
+     * @param password user password
      */
-    public void updateUserPassword(final String newPassword) {
-        auth.reauthenticateUser()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull final Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.v("reauth", "Success");
-                            updatePassword(newPassword);
-                        } else {
-                            Log.v("reauth", "failed");
-                        }
+    public void updateUserPassword(final String newPassword, final String email, final String password) {
+        Task<Void> updateUsrPassTask = auth.reauthenticateUser(email, password);
+        if (updateUsrPassTask != null) {
+            updateUsrPassTask.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull final Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Log.v("reauth", "Success");
+                        updatePassword(newPassword);
+                    } else {
+                        Log.v("reauth", "failed");
                     }
-                });
+                }
+            });
+        }
     }
 
     /**
@@ -170,10 +191,11 @@ public class BaseViewModel extends ViewModel {
 
     /**
      * Getter of current user ID.
+     * @param userEmail current user email.
      */
-    void getCurrentUserId() {
-        dbManager.getCollectionRef("users")
-                .whereEqualTo("email", Parameters.CURRENT_USER_EMAIL)
+    void getCurrentUserId(final String userEmail) {
+        dbManager.getCollectionRef(Constants.FB_COLLECTION_USERS)
+                .whereEqualTo(Constants.FB_USER_EMAIL, userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -182,8 +204,11 @@ public class BaseViewModel extends ViewModel {
                         if (task.isSuccessful()) {
                             QuerySnapshot query = task.getResult();
                             if (query != null && query.size() == 1) {
-                                Parameters.CURRENT_USER_ID =
+                                String id =
                                         query.getDocuments().get(0).getId();
+                                idValue.postValue(id);
+                            } else {
+                                idValue.postValue("");
                             }
                         }
                     }
