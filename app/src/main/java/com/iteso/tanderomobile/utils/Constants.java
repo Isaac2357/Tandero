@@ -15,7 +15,7 @@ public abstract class Constants {
     /** */
     public static final String FB_COLLECTION_USERS = "users";
     /** */
-    public static final String FB_COLLECTION_TANDA = "tanda";
+    public static final String FB_COLLECTION_TANDA = "tandas";
     /** */
     public static final String FB_COLLECTION_USERTANDA = "user-tanda";
     // User's fields
