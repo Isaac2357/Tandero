@@ -10,10 +10,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
+import com.iteso.tanderomobile.utils.Constants;
 import com.iteso.tanderomobile.utils.Parameters;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.iteso.tanderomobile.utils.Constants.FB_COLLECTION_TANDA;
+import static com.iteso.tanderomobile.utils.Constants.FB_TANDA_NAME;
+import static com.iteso.tanderomobile.utils.Constants.FB_TANDA_ORGANIZER;
+
 /**Admin Organizer ViewModel for the batches owned view.*/
 public class AdminOrganizerViewModel extends ViewModel {
     /**Live data of lists of strings, containing the names of the batches.*/
@@ -27,11 +34,12 @@ public class AdminOrganizerViewModel extends ViewModel {
     public LiveData<List<String>> getTandas() {
         return misTandas;
     }
-
     /**This method is called on the fragment,
-     * so that it requests the tandas on firebase.*/
-    public void requestTandas() {
-        dbmanager.getCollectionRef("tandas").get().addOnCompleteListener(
+     * so that it requests the tandas on firebase.
+     * @param sharedPrefs Shared prefs.*/
+    public void requestTandas(final SharedPrefs sharedPrefs) {
+        final String userEmail = (String) sharedPrefs.getFromPrefs(Constants.CURRENT_USER_EMAIL, "");
+        dbmanager.getCollectionRef(FB_COLLECTION_TANDA).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(
@@ -40,10 +48,9 @@ public class AdminOrganizerViewModel extends ViewModel {
                             ArrayList<String> tandas = new ArrayList<>();
                             for (QueryDocumentSnapshot document
                                     : task.getResult()) {
-                                if (document.get("organizador").
-                                        toString().
-                                        equals(Parameters.CURRENT_USER_EMAIL)) {
-                                    tandas.add((String) document.get("name"));
+                                String tandaOrganizer = document.getString(FB_TANDA_ORGANIZER);
+                                if (tandaOrganizer != null && tandaOrganizer.equals(userEmail)) {
+                                    tandas.add((String) document.get(FB_TANDA_NAME));
                                 }
                             }
                             misTandas.postValue(tandas);

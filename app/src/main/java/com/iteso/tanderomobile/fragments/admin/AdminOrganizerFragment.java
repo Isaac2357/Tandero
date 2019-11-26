@@ -4,7 +4,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.activities.base.ActivityBase;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizer;
-import com.iteso.tanderomobile.utils.Parameters;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CreateTandaDialogFragment;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import android.os.Bundle;
@@ -19,6 +19,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
+import static com.iteso.tanderomobile.utils.Constants.CURRENT_TANDA;
+
 /**This class holds the AdminOrganizerFragment.
  * It is responsible for showing the batches the current user is organizing.
  * As well as the register form for another new batch.
@@ -31,6 +34,8 @@ public class AdminOrganizerFragment extends Fragment {
     /**Progress dialog that shows in the screen whenever the batches have not
      * yet being loaded.*/
     private CustomProgressDialog progressDialog;
+    /** SharedPrefences. */
+    private SharedPrefs sharedPrefs;
     /**This method creates the view for this fragment.
      * @param inflater The Layout inflater.
      * @param container The ViewGroup container.
@@ -45,7 +50,10 @@ public class AdminOrganizerFragment extends Fragment {
                 ViewModelProviders.of(this).get(AdminOrganizerViewModel.class);
         final View root = inflater.inflate(
                 R.layout.fragment_organizer, container, false);
-        progressDialog = new CustomProgressDialog(getActivity());
+        if (getActivity() != null) {
+            progressDialog = new CustomProgressDialog(getActivity());
+        }
+        sharedPrefs = new SharedPrefs(getActivity());
 
         organizerViewModel.getTandas().observe(
                 this, new Observer<List<String>>() {
@@ -57,9 +65,13 @@ public class AdminOrganizerFragment extends Fragment {
                         new View.OnClickListener() {
                     @Override
                     public void onClick(final View view) {
-                        Parameters.CURRENT_TANDA = s.get(
-                                recyclerView.getChildAdapterPosition(view)
-                        ).toString();
+                        String tanda = "";
+                        if (s != null) {
+                            tanda = s.get(recyclerView.
+                                    getChildAdapterPosition(view));
+                        }
+                        sharedPrefs.saveToPrefs(CURRENT_TANDA, tanda);
+
 
                         ((ActivityBase) getActivity()).openFragment(
                                 new OrganizerTandaFragment(), null);
@@ -73,7 +85,7 @@ public class AdminOrganizerFragment extends Fragment {
             }
         });
         progressDialog.show();
-        organizerViewModel.requestTandas();
+        organizerViewModel.requestTandas(sharedPrefs);
         recyclerView = root.findViewById(R.id.fragment_organizer_tandas_rv);
         recyclerView.setHasFixedSize(true);
 
@@ -84,7 +96,9 @@ public class AdminOrganizerFragment extends Fragment {
             public void onClick(final View view) {
                 CreateTandaDialogFragment dialog =
                         new CreateTandaDialogFragment();
-                dialog.show(getFragmentManager(), "Create tanda");
+                if (getFragmentManager() != null) {
+                    dialog.show(getFragmentManager(), "Create tanda");
+                }
             }
         });
 

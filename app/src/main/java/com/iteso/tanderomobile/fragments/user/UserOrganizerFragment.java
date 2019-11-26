@@ -20,6 +20,9 @@ import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 import com.iteso.tanderomobile.utils.ui.JoinTandaDialog;
 import java.util.List;
+
+import static com.iteso.tanderomobile.utils.Constants.FB_COLLECTION_TANDA;
+
 /**User fragment, shows the batches that a given user is in.*/
 public class UserOrganizerFragment extends Fragment {
     /**The recyclerview for the batches.*/
@@ -52,7 +55,7 @@ public class UserOrganizerFragment extends Fragment {
                 new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable final List<String> s) {
-                Log.v("Tandas", s.toString());
+                Log.v(FB_COLLECTION_TANDA, s.toString());
                 mAdapter = new AdapterTandasOrganizer(s);
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();

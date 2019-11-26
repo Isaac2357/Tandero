@@ -12,6 +12,10 @@ import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import com.iteso.tanderomobile.utils.Parameters;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.iteso.tanderomobile.utils.Constants.FB_COLLECTION_USERTANDA;
+import static com.iteso.tanderomobile.utils.Constants.FB_TANDA_NAME;
+
 /**User Organizer View Model for the User Organizer Fragment.*/
 public class UserOrganizerViewModel extends ViewModel {
     /**List of batches.*/
@@ -27,7 +31,7 @@ public class UserOrganizerViewModel extends ViewModel {
      * @param userID current user id.
      **/
     public void requestTandas(final String userID) {
-        dbmanager.getCollectionRef("user-tanda")
+        dbmanager.getCollectionRef(FB_COLLECTION_USERTANDA)
                  .get().addOnCompleteListener(
                          new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -37,7 +41,7 @@ public class UserOrganizerViewModel extends ViewModel {
                         ArrayList<String> myTandas = new ArrayList<>();
                         for (DocumentSnapshot doc : task.getResult()) {
                             if (doc.get(userID) != null) {
-                                myTandas.add((String) doc.get("name"));
+                                myTandas.add((String) doc.get(FB_TANDA_NAME));
                             }
                         }
                         misTandas.postValue(myTandas);
