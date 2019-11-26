@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer.admin;
+package com.iteso.tanderomobile.fragments.admin;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;

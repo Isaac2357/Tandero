@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.fragments.organizer.admin;
+package com.iteso.tanderomobile.fragments.admin;
 
 import android.os.Bundle;
 import android.util.Log;

@@ -53,10 +53,10 @@ public final class AuthenticationManager implements Authentication {
     /**Reauthenticate method.
      * @return Task.*/
     @Override
-    public Task<Void> reauthenticateUser() {
+    public Task<Void> reauthenticateUser(final String email, final String password) {
         AuthCredential credential = EmailAuthProvider.getCredential(
-                Parameters.CURRENT_USER_EMAIL,
-                Parameters.CURRENT_USER_PASSWORD
+                email,
+                password
         );
         FirebaseUser user = getCurrentUser();
         if (user != null) {
