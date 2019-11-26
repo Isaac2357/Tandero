@@ -22,4 +22,61 @@
     <string name="title_notifications">Notifications</string>
     <string name="close_session">Close Session</string>
     <string name="title_activity_a">a</string>
+    <string name="select_image">Selecciona imagen</string>
+    <string name="name">Nombre</string>
+    <string name="last_name">Apellidos</string>
+    <string name="mail">Email</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="tanda_unique_key">Tanda unique key</string>
+
+    <!--  App  -->
+    <string name="app_blank_value">Blank value is not allowed.</string>
+    <string name="app_invalid_form">Invalid fileds were detected, check the info</string>
+
+    <!-- Activity Enroll   -->
+    <string name="enroll_email_text">Email:</string>
+    <string name="enroll_password_text">Password:</string>
+    <string name="enroll_confirm_password_text">Confirm password:</string>
+    <string name="enroll_register_text">Register</string>
+    <string name="enroll_registration_failed">Registration failed… try again</string>
+    <string name="enroll_values_do_not_match">Values ​​do not match</string>
+
+    <!--  Activity login  -->
+    <string name="login_mail_text">Email:</string>
+    <string name="login_password_text">Password:</string>
+    <string name="login_btn_text">Login</string>
+    <string name="login_register_text">Register</string>
+    <string name="login_blank_email">Blank email is not allowed.</string>
+    <string name="login_blank_password">Blank password is not allowed.</string>
+    <string name="login_failed">Login failed… try again</string>
+
+    <!--  Sign out dialog  -->
+    <string name="dialog_sign_out_title">Close session</string>
+    <string name="dialog_sign_out_message">Do you want to log out?</string>
+    <string name="dialog_sign_out_postive">Accept</string>
+    <string name="dialog_sign_out_negative">Cancel</string>
+
+    <!-- Create Tanda dialog.    -->
+    <string name="dialog_create_tanda_title">Register tanda</string>
+    <string name="dialog_create_tanda_positive">Accept</string>
+    <string name="dialog_create_tanda_negative">Cancel</string>
+
+    <!-- Join Tanda dialog.    -->
+    <string name="dialog_join_tanda_title">Join tanda</string>
+    <string name="dialog_join_tanda_positive">Join</string>
+    <string name="dialog_join_tanda_negative">Cancel</string>
+    <string name="dialog_join_tanda_success">Successfully joined to the tanda.</string>
+    <string name="dialog_join_tanda_fail">Unsuccessfully joined to the tanda, try again.</string>
+
+
+
+    <!-- Error join Tanda dialog.    -->
+    <string name="dialog_error_join_tanda_message">Something went wrong.</string>
+    <string name="dialog_error_join_tanda_positive">Accept</string>
+
+
+
+
+
 </resources>

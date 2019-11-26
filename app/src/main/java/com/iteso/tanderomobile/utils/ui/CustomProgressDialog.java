@@ -1,4 +1,4 @@
-package com.iteso.tanderomobile.utils;
+package com.iteso.tanderomobile.utils.ui;
 
 import android.app.Dialog;
 import android.content.Context;
