@@ -32,6 +32,7 @@
 
     <!--  App  -->
     <string name="app_blank_value">Blank value is not allowed.</string>
+    <string name="app_invalid_form">Invalid fileds were detected, check the info</string>
 
     <!-- Activity Enroll   -->
     <string name="enroll_email_text">Email:</string>
@@ -55,5 +56,27 @@
     <string name="dialog_sign_out_message">Do you want to log out?</string>
     <string name="dialog_sign_out_postive">Accept</string>
     <string name="dialog_sign_out_negative">Cancel</string>
+
+    <!-- Create Tanda dialog.    -->
+    <string name="dialog_create_tanda_title">Register tanda</string>
+    <string name="dialog_create_tanda_positive">Accept</string>
+    <string name="dialog_create_tanda_negative">Cancel</string>
+
+    <!-- Join Tanda dialog.    -->
+    <string name="dialog_join_tanda_title">Join tanda</string>
+    <string name="dialog_join_tanda_positive">Join</string>
+    <string name="dialog_join_tanda_negative">Cancel</string>
+    <string name="dialog_join_tanda_success">Successfully joined to the tanda.</string>
+    <string name="dialog_join_tanda_fail">Unsuccessfully joined to the tanda, try again.</string>
+
+
+
+    <!-- Error join Tanda dialog.    -->
+    <string name="dialog_error_join_tanda_message">Something went wrong.</string>
+    <string name="dialog_error_join_tanda_positive">Accept</string>
+
+
+
+
 
 </resources>
