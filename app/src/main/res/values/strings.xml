@@ -103,5 +103,9 @@
     <string name="fragment_organizer_tanda_participantes_text">Participantes:</string>
     <string name="fragment_organizer_buscarusuarios_buttonText">Buscar usuarios</string>
     <string name="item_usuario_ejemplo_tv">ejemplo@hotmail.com</string>
+    <!--Activity cuenta-->
+        <string name="seleccion_imagen">Selecciona imagen</string>
+    <string name="olvidar_contra">¿Olvidaste tu contraseña?</string>
+
 
 </resources>
