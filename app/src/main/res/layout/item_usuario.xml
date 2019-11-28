@@ -11,9 +11,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:textAlignment="center"
-        android:background="#4285F4"
-        android:textColor="#ffffff"
+        android:background="@color/item_tanda_tv_background"
+        android:textColor="@color/backgroundWhite"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:text="ejemplo@hotmail.com"/>
+        android:text="@string/item_usuario_ejemplo_tv"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de la nueva tanda"
+        android:hint="@string/dialog_createTanda_nombretandahint"
         app:layout_constraintBottom_toTopOf="@id/dialog_createtanda_til_participantes"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -29,7 +29,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Numero participantes"
+        android:hint="@string/dialog_createTanda_numeroParticipantesHint"
         app:layout_constraintBottom_toTopOf="@id/dialog_createtanda_frecpago_textview"
         app:layout_constraintTop_toBottomOf="@id/dialog_createtanda_til_nombretanda"
         >
@@ -48,7 +48,7 @@
         android:id="@+id/dialog_createtanda_frecpago_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Frecuencia de pago:"
+        android:text="@string/dialog_createTanda_frecuenciaPagoText"
         android:textSize="16sp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/dialog_createtanda_frecPago_rg"
@@ -69,8 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="Quincenal"
-            android:layout_marginRight="20dp"
+            android:text="@string/dialog_createTanda_quincenal_text"
+            android:layout_marginEnd="20dp"
             />
 
         <RadioButton
@@ -78,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="Mensual"
+            android:text="@string/dialog_createTanda_mensual_text"
             />
 
     </RadioGroup>
@@ -88,7 +88,7 @@
         android:id="@+id/dialog_createtanda_diasCobro_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Dias de cobro (del mes)"
+        android:text="@string/dialog_createTanda_diasCobro"
         android:textSize="16sp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/dialog_createtanda_diasCobro_rg"
@@ -109,8 +109,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="1, 2 y 3"
-            android:layout_marginRight="20dp"
+            android:text="@string/dialog_createTanda_primerosMesText"
+            android:layout_marginEnd="20dp"
             />
 
         <RadioButton
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="15, 16 y 17"
+            android:text="@string/dialog_createTanda_mediados_text"
             />
 
     </RadioGroup>
@@ -130,7 +130,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Monto de aportacion"
+        android:hint="@string/dialog_createTanda_monto_hint"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -146,7 +146,7 @@
         android:id="@+id/dialog_createtanda_fechaInicio_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fecha de inicio"
+        android:text="@string/dialog_createTanda_fechaText"
         android:textSize="16sp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/dialog_createtanda_til_dia"
@@ -159,7 +159,7 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_createtanda_fechaInicio_tv"
         android:layout_marginTop="20dp"
         android:layout_width="80dp"
-        android:hint="Dia"
+        android:hint="@string/dialog_createTanda_dia_hint"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/dialog_createtanda_til_mes"
@@ -180,7 +180,7 @@
         android:layout_marginTop="20dp"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:hint="Mes"
+        android:hint="@string/dialog_createTanda_mes_hint"
         app:layout_constraintLeft_toRightOf="@id/dialog_createtanda_til_dia"
         app:layout_constraintRight_toLeftOf="@id/dialog_createtanda_til_año"
         >
@@ -199,7 +199,7 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_createtanda_fechaInicio_tv"
         android:layout_marginTop="20dp"
         android:layout_width="80dp"
-        android:hint="Año"
+        android:hint="@string/dialog_createTanda_year_hint"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/dialog_createtanda_til_mes"
         app:layout_constraintRight_toRightOf="parent"
