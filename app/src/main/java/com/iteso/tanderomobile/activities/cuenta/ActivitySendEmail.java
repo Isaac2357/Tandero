@@ -13,11 +13,24 @@ import android.widget.Toast;
 import com.iteso.tanderomobile.R;
 
 public class ActivitySendEmail extends AppCompatActivity {
-
-    EditText mRecipientET,mSubjetET,mMessageET;
-    Button mSendEmailBtn;
+    /**
+     * variable.
+     */
+    private EditText mRecipientET;
+    /**
+     * variable.
+     */
+    private EditText mSubjetET;
+    /**
+     * variable.
+     */
+    private EditText mMessageET;
+    /**
+     * variable.
+     */
+    private Button mSendEmailBtn;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enviar_email);
 
@@ -28,28 +41,29 @@ public class ActivitySendEmail extends AppCompatActivity {
         //evento boton
         mSendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 String recipient = mRecipientET.getText().toString().trim();
                 String subjet = mSubjetET.getText().toString().trim();
                 String message = mMessageET.getText().toString().trim();
 
-                sendEmail(recipient,subjet,message);
+                sendEmail(recipient, subjet, message);
             }
         });
     }
 
-    private void sendEmail(String recipient, String subjet, String message) {
+    private void sendEmail(final String recipient,
+                           final  String subjet, final String message) {
         Intent mEmailIntent = new Intent(Intent.ACTION_SEND);
         mEmailIntent.setData(Uri.parse("mailto:"));
         mEmailIntent.setType("text/plain");
-        mEmailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{recipient});
-        mEmailIntent.putExtra(Intent.EXTRA_SUBJECT,subjet);
-        mEmailIntent.putExtra(Intent.EXTRA_TEXT,message);
-        try{
-            startActivity(Intent.createChooser(mEmailIntent,"Email de organizador"));
-        }
-        catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        mEmailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{recipient});
+        mEmailIntent.putExtra(Intent.EXTRA_SUBJECT, subjet);
+        mEmailIntent.putExtra(Intent.EXTRA_TEXT, message);
+        try {
+            startActivity(Intent.createChooser(mEmailIntent,
+                    "Email de organizador"));
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

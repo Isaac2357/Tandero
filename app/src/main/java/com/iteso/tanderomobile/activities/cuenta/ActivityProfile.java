@@ -14,54 +14,84 @@ import android.widget.ImageView;
 
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.utils.Parameters;
-
+/**
+ * clase.
+ */
 public class ActivityProfile extends AppCompatActivity {
-
-    ImageView imagen;
-    Button olvidarContra;
-    EditText email;
-    EditText pass;
+    /**
+     * variable .
+     */
+    private ImageView imagen;
+    /**
+     * variable .
+     */
+    private Button olvidarContra;
+    /**
+     * variable .
+     */
+    private EditText email;
+    /**
+     * variable .
+     */
+    private EditText pass;
+    /**
+     * Varibale VAL .
+     */
+    public static final int VAL = 10;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(final
+                                  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cuenta);
 
         imagen = (ImageView) findViewById(R.id.imagenId);
-        olvidarContra =(Button) findViewById(R.id.btnsave);
-        email =(EditText) findViewById(R.id.emailET);
+        olvidarContra = (Button) findViewById(R.id.btnsave);
+        email = (EditText) findViewById(R.id.emailET);
         pass = (EditText) findViewById(R.id.password);
         email.setText(Parameters.CURRENT_USER_EMAIL);
         email.setEnabled(false);
         pass.setText(Parameters.CURRENT_USER_PASSWORD);
         pass.setEnabled(false);
         olvidarContra.setOnClickListener(new View.OnClickListener() {
+            @SuppressWarnings("checkstyle:HiddenField")
             @Override
-            public void onClick(View view) {
-                Intent olvidarContra = new Intent(ActivityProfile.this, ActivitySendEmail.class);
-                startActivity(olvidarContra);
+            public void onClick(final View view) {
+                Intent olderContra = new Intent(
+                        ActivityProfile.this, ActivitySendEmail.class);
+                startActivity(olderContra);
             }
         });
     }
-
-    public void onclick(View view) {
+    /**
+     *
+     * @param view .
+     */
+    final void onclick(final View view) {
         cargarImagen();
     }
-
+    /**
+     *
+     */
     private void cargarImagen() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent,"Selecciona aplicacion"),10);
+        startActivityForResult(intent.createChooser(intent,
+                "Selecciona aplicacion"), VAL);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected final void onActivityResult(final int requestCode,
+                                          final int resultCode,
+                                          final @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode==RESULT_OK){
-            Uri path =data.getData();
+        if (resultCode == RESULT_OK) {
+            Uri path = data.getData();
             imagen.setImageURI(path);
         }
     }
 
 
 }
+

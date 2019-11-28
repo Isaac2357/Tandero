@@ -7,8 +7,15 @@ import androidx.annotation.NonNull;
 
 import com.iteso.tanderomobile.R;
 
+/**
+ * CLASE .
+ */
 public class CustomProgressDialog extends Dialog {
-    public CustomProgressDialog(@NonNull Context context) {
+    /**
+     *
+     * @param context .
+     */
+    public CustomProgressDialog(final @NonNull Context context) {
         super(context);
         setContentView(R.layout.custom_progress_dialog);
     }
@@ -19,14 +26,14 @@ public class CustomProgressDialog extends Dialog {
     }
 
     @Override
-    public void show() {
+    public final void show() {
         if (!isShowing()) {
             super.show();
         }
     }
 
     @Override
-    public void dismiss() {
+    public final void dismiss() {
         if (isShowing()) {
             super.dismiss();
         }
