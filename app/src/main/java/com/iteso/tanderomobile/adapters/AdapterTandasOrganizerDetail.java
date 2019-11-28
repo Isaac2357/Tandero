@@ -42,9 +42,7 @@ public class AdapterTandasOrganizerDetail extends
         View v =  LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_usuario, parent, false);
 
-        AdapterTandasOrganizerDetail.MyViewHolder vh =
-                new AdapterTandasOrganizerDetail.MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
     /**Binds with the position of the dataset.
      * @param holder The View Holder.

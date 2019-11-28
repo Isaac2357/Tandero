@@ -56,7 +56,7 @@ public class UserOrganizerFragment extends Fragment {
             @Override
             public void onChanged(@Nullable final List<String> s) {
                 Log.v(FB_COLLECTION_TANDA, s.toString());
-                mAdapter = new AdapterTandasOrganizer(s);
+                mAdapter = new AdapterTandasOrganizer(s, false);
                 recyclerView.setAdapter(mAdapter);
                 mAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();

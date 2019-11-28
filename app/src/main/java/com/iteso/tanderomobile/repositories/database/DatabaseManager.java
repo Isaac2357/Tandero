@@ -16,7 +16,8 @@ public final class DatabaseManager {
      */
     private DatabaseManager() {
         firestoreInstance = FirebaseFirestore.getInstance();
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+        FirebaseFirestoreSettings settings =
+                new FirebaseFirestoreSettings.Builder()
                 .setTimestampsInSnapshotsEnabled(true)
                 .setPersistenceEnabled(true)
                 .setSslEnabled(true)
