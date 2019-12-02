@@ -13,11 +13,18 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.iteso.tanderomobile.repositories.database.DatabaseManager;
 import com.iteso.tanderomobile.utils.Parameters;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.iteso.tanderomobile.utils.Constants.CURRENT_TANDA;
+import static com.iteso.tanderomobile.utils.Constants.FB_COLLECTION_USERS;
+import static com.iteso.tanderomobile.utils.Constants.FB_COLLECTION_USERTANDA;
+import static com.iteso.tanderomobile.utils.Constants.FB_TANDA_NAME;
+import static com.iteso.tanderomobile.utils.Constants.FB_USER_EMAIL;
 
 /**Batch organizer ViewModel view.*/
 public class OrganizerTandaViewModel extends ViewModel {
@@ -37,30 +44,33 @@ public class OrganizerTandaViewModel extends ViewModel {
 
     /**
      * Requests the participants in Firebase.
+     * @param sharedPrefs shared prefs.
      */
-    public void requestParticipantes() {
-        dbmanager.getCollectionRef("user-tanda").get().addOnCompleteListener(
+    public void requestParticipantes(final SharedPrefs sharedPrefs) {
+        final String currentTanda = (String) sharedPrefs.
+                getFromPrefs(CURRENT_TANDA, "");
+
+        dbmanager.getCollectionRef(FB_COLLECTION_USERTANDA).get()
+                .addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull
                                            final Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.v("otvm", Parameters.CURRENT_TANDA
-                                    + "-" + Parameters.CURRENT_USER_ID);
                             final ArrayList<String> participantesAux =
                                     new ArrayList<>();
                             retrievedInformation = new HashMap<>();
                             for (QueryDocumentSnapshot document
                                     : task.getResult()) {
-                                if (Parameters.CURRENT_TANDA.equals(
-                                        document.getString("name"))) {
+                                if (currentTanda.equals(
+                                        document.getString(FB_TANDA_NAME))) {
 
                                     retrievedInformation = document.getData();
-                                    retrievedInformation.remove("name");
+                                    retrievedInformation.remove(FB_TANDA_NAME);
 
                                     doRequest(participantesAux);
 
-                                    Log.v("Mapa: ",
+                                    Log.v("OrganizerTandaVM:",
                                             retrievedInformation.toString());
                                 }
                             }
@@ -75,7 +85,7 @@ public class OrganizerTandaViewModel extends ViewModel {
      * @param participantesAux participants
      * */
     private void doRequest(final ArrayList<String> participantesAux) {
-        dbmanager.getCollectionRef("users").get().addOnCompleteListener(
+        dbmanager.getCollectionRef(FB_COLLECTION_USERS).get().addOnCompleteListener(
                 new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull
@@ -87,7 +97,7 @@ public class OrganizerTandaViewModel extends ViewModel {
                                         : retrievedInformation.keySet()) {
                                     if (document2.getId().equals(keys)) {
                                         participantesAux.add(document2.
-                                                getString("email"));
+                                                getString(FB_USER_EMAIL));
                                     }
                                 }
                             }

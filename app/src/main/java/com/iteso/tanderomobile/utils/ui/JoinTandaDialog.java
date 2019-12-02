@@ -28,13 +28,25 @@ import com.iteso.tanderomobile.utils.SharedPrefs;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public class JoinTandaDialog extends DialogFragment {
+    /**
+     * DatabaseManager .
+     */
     private DatabaseManager dbmanager = DatabaseManager.createInstance();
+    /**
+     * CustomProgressDialog.
+     */
     private CustomProgressDialog progressDialog = null;
+    /**
+     * SharedPrefs .
+     */
     private SharedPrefs sharedPrefs = null;
 
     @NonNull
-    @SuppressLint("InflateParams")
+    final @SuppressLint("InflateParams")
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         FragmentActivity activity = getActivity();
@@ -71,15 +83,19 @@ public class JoinTandaDialog extends DialogFragment {
 
         // Create the AlertDialog object and return it.
         return new AlertDialog.Builder(getActivity())
-                    .setMessage(getString(R.string.dialog_error_join_tanda_message))
-                        .setPositiveButton(R.string.dialog_error_join_tanda_positive, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, final int which) {
-                                dialog.dismiss();
-                            }
-                        }).create();
+                .setMessage(getString(R.string.dialog_error_join_tanda_message))
+                .setPositiveButton(R.string.dialog_error_join_tanda_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(final DialogInterface dialog, final int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
     }
 
+    /**
+     *
+     * @param uniqueKey .
+     */
     private void writeRelationUserTandaInDatabase(final String uniqueKey) {
         Log.v("Unique key", uniqueKey);
         dbmanager.getCollectionRef(Constants.FB_COLLECTION_TANDA).get().addOnCompleteListener(
@@ -99,7 +115,7 @@ public class JoinTandaDialog extends DialogFragment {
                                                     addUserToTanda(name);
                                                 }
                                             }
-                                           break;
+                                            break;
                                         }
                                     }
 
@@ -112,6 +128,10 @@ public class JoinTandaDialog extends DialogFragment {
         );
     }
 
+    /**
+     *
+     * @param tandaName .
+     */
     private void addUserToTanda(final String tandaName) {
         Map<String, Object> user = new HashMap<>();
         Map<String, Object> info = new HashMap<>();

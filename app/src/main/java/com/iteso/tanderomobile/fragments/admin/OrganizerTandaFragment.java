@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.iteso.tanderomobile.R;
 import com.iteso.tanderomobile.adapters.AdapterTandasOrganizerDetail;
+import com.iteso.tanderomobile.utils.SharedPrefs;
 import com.iteso.tanderomobile.utils.ui.CustomProgressDialog;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class OrganizerTandaFragment extends Fragment {
     /**Progress dialog that shows in the screen whenever the batches have not
      * yet being loaded.*/
     private CustomProgressDialog progressDialog;
+    /** SharedPrefences. */
+    private SharedPrefs sharedPrefs;
     /**This method creates a view for this fragment.
     * @param inflater inflater used to inflate the layout.
     * @param container Container of the view group.
@@ -36,6 +39,7 @@ public class OrganizerTandaFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container,
                              final Bundle savedInstanceState) {
+        sharedPrefs = new SharedPrefs(getActivity());
 
         OrganizerTandaViewModel organizerTandaViewModel =
                 ViewModelProviders.of(this).get(
@@ -50,7 +54,9 @@ public class OrganizerTandaFragment extends Fragment {
                 this, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable final List<String> s) {
-                Log.v("participantes", s.toString());
+                if (s != null) {
+                    Log.v("participantes", s.toString());
+                }
                 mAdapter = new AdapterTandasOrganizerDetail(s);
 
 
@@ -61,7 +67,7 @@ public class OrganizerTandaFragment extends Fragment {
             }
         });
         progressDialog.show();
-        organizerTandaViewModel.requestParticipantes();
+        organizerTandaViewModel.requestParticipantes(sharedPrefs);
 
         recyclerView = root.findViewById(
                 R.id.frag_org_tanda_recyclerview_participantes);

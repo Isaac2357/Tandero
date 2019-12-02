@@ -24,7 +24,7 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     android:src="@drawable/ic_add"
-    android:background="#ffffff"/>
+    android:background="@color/backgroundWhite"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
